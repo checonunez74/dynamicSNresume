@@ -1,0 +1,159 @@
+{
+  "consultant": {
+    "name": "Sergio H Nunez",
+    "contact": {
+      "phone": "+1-9568002148",
+      "email": "checonunez@gmail.com",
+      "location": "Boerne, Texas, United States",
+      "linkedin": "www.linkedin.com/in/sergio-h-nunez"
+    }
+  },
+  "skills": {
+    "experience": {
+      "Temenos": 5,
+      "JavaScript": 4,
+      "Java-Groovy": 4,
+      "Maestro": 4
+    },
+    "computer_languages": [
+      "Java",
+      "JavaScript",
+      "Groovy",
+      "GWT tools",
+      "JSON Objects",
+      "Spring",
+      "Springframework",
+      "Docker",
+      "Gradle",
+      "Hibernate",
+      "JAXB",
+      "AJAX",
+      "REST services",
+      "Microservices",
+      "Hibernate",
+      "Postgres",
+      "ANT Scripting",
+      "HTML",
+      "Angular",
+      "PHP",
+      "CSS",
+      "iText",
+      "iOS mobile development",
+      "Java Groovy",
+      "Maven",
+      "Java Script",
+      ".NET",
+      "Databases (Relational & Object)",
+      "Oracle",
+      "Batch Script",
+      "SOA",
+      "SoapUI",
+      "XML",
+      "Mainframe Applications",
+      "Software testing",
+      "MySQL",
+      "SQL",
+      "Oracle Products",
+      "COM",
+      "BASIC/Visual Basic",
+      "C/Turbo C/C++/Visual C++/Objective-C",
+      "Pascal",
+      "Microprocessor Assembler",
+      "DOS Utilities Ada 95",
+      "IBM Products"
+    ],
+    "tools": [
+      "Mathcad",
+      "AutoCAD",
+      "Matlab",
+      "Electronics Workbench",
+      "AutoSketch"
+    ],
+    "core_banking": ["Temenos T24", "hPLUS"],
+    "integration_platforms": [
+      "IBM Integration Bus (ESB)",
+      "Temenos IRIS R18",
+      "Apigee",
+      "Temenos Infinity – KONY"
+    ],
+    "languages": ["Spanish", "English"]
+  },
+  "certifications": [
+    "Infinity journey managers for platform developers",
+    "PWH Certificate C# Fundamentals Certified in Java",
+    "Completed professional training on Temenos Journey Manager platform",
+    "Journey manager Maestro expert",
+    "Core Banking AA Technical",
+    "Web Design Accessibility Certificate"
+  ],
+  "honors_awards": ["CODE Red"],
+  "publications": ["The Monitor"],
+  "summary": "Aside from my background, as a Frontend Developer, I've accumulated more than 20 years of combined experience in the realm of computers. Throughout seven years I worked as a developer and prior to that, I had roles as a Graphic Designing, Journey platform manager in Temenos Maestro, Computer Technical Specialist, and Web Designer. Currently, I am in the process of training to become a certified AWS and Azure Solutions Architect Associate. With my skills and expertise, I believe I can bring value to your team. Being bilingual in English and Spanish allows me to excel in my development work. My strengths lie in solving problems and delivering solutions. Holding a B.S. Degree in Computer Science has equipped me with proficiency in programming languages such as HTML, CSS, JavaScript, React, Angular, and Vue.js. Additionally, I am well versed in working within an environment like Atlassian. Have ample experience collaborating with teams to ensure projects are completed on schedule and within budget. What drives me is the passion for innovation and growth; constantly seeking avenues to enhance user experiences. My collaborative nature makes me an ideal team player who is always open to learning concepts. Rest assured that by joining your team I will make contributions, toward achieving our shared goals.",
+  "experience": [
+    {
+      "company": "First National Bank",
+      "role": "Senior Journey manager Maestro",
+      "dates": "September 2023 - Present",
+      "location": "Pittsburgh, PA 15212",
+      "responsibilities": [
+        "Leveraged expertise in JAVA and ReactJS to architect and implement mission-critical components of the Journey Maestro Platform.",
+        "Ensured seamless integration with existing Temenos products like Journey Maestro, Journey Manager, and Journey Analytics.",
+        "Developed digital wallets in Temenos using Java and published its APIs using Kony and IBM ESB.",
+        "Designed and developed Temenos multithreaded services to process customer and KYC records into CRM."
+      ]
+    },
+    {
+      "company": "OmegaOne Developers",
+      "role": "Software Developer/Designer",
+      "dates": "2016 - Present",
+      "location": "Remote",
+      "responsibilities": [
+        "Freelance iOS mobile app developer, web developer, and software developer.",
+        "Contributed to the design process, including icons, logos, fonts, and UX/UI tasks."
+      ]
+    },
+    {
+      "company": "Temenos",
+      "role": "Developer",
+      "dates": "November 2018 - February 2023",
+      "location": "Austin, Texas",
+      "responsibilities": [
+        "Front-end and UI development using JavaScript, JSON, and Java.",
+        "Fixed defects and maintained form templates in Infinity Journey Maestro."
+      ]
+    },
+    {
+      "company": "JASER Enterprises, LLC",
+      "role": "Art Director",
+      "dates": "October 2009 - 2016",
+      "responsibilities": [
+        "Designed layouts for tabloids, magazines, and newspapers."
+      ]
+    },
+    {
+      "company": "El Heraldo News",
+      "role": "Web News Editor / Co-Editor",
+      "dates": "September 2013 - November 2013",
+      "responsibilities": [
+        "Attended events and created Spanish articles for publication."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "The University of Texas Rio Grande Valley",
+      "degree": "Bachelor’s Degree, Computer Science",
+      "years": "2015 - 2017"
+    },
+    {
+      "institution": "South Texas College",
+      "degree": "Associate of Applied Science, Computer Science",
+      "years": "2012 - 2014"
+    },
+    {
+      "institution": "Memorial High School",
+      "degree": "Highschool",
+      "years": "1990 - 1994"
+    }
+  ]
+}
