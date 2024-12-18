@@ -1,34 +1,11 @@
-import {Box, Tabs, Tab } from '@mui/material';
-import { useState } from 'react';
-import SkillsDisplay from './components/DataDisplay.jsx';
-import DynamicDataComponent from '../src/hooks/useFirebaseData.jsx';
-import DataDisplay from './components/DataDisplay.jsx';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { Tabs, Tab, Box } from '@mui/material';
+import DynamicDataComponent from '../hooks/useFirebaseData';
+import DataDisplay from '../components/DataDisplay';
 
 function App() {
   const [value, setValue] = useState(0);
-
-  const testData = {
-  computer_languages: ["Java", "JavaScript"],
-  tools: ["VS Code", "Git"]
-  };
-
-  const allyProps = (index) => {
-    return {
-      id: `vertical-tab-${index}`,
-      'aria-controls': `vertical-tabpanel-${index}`,
-    };
-  };
-
-  const sections = [
-    'summary',
-    'education',
-    'experience',
-    'skills',
-    'certifications',
-    'publications',
-    
-  ];
+  const [sections, setSections] = useState(['education', 'experience']);
 
   return (
     <div className="App">
@@ -55,8 +32,8 @@ function App() {
                 <DynamicDataComponent
                   key={section}
                   path={section}
-                  component={DataDisplay} // Changed this line
-                  title={section.replace(/_/g, ' ')} // Added title prop
+                  component={DataDisplay}
+                  title={section.replace(/_/g, ' ')}
                 />
               )
             ))}
@@ -67,4 +44,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

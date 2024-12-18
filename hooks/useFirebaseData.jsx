@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import fetchData from '../utils/fetchData';
 
-function DynamicDataComponent({ path, component: Component, title }) { // Added title prop
+function DynamicDataComponent({ path, component: Component, title }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +13,6 @@ function DynamicDataComponent({ path, component: Component, title }) { // Added 
     const unsubscribe = fetchData(
       path,
       (fetchedData) => {
-        // Wrap the data in an object with the path as the key
         const wrappedData = {
           [path]: fetchedData
         };
@@ -27,7 +26,6 @@ function DynamicDataComponent({ path, component: Component, title }) { // Added 
       }
     );
 
-    // Cleanup subscription on unmount
     return () => {
       if (unsubscribe) unsubscribe();
     };
@@ -72,4 +70,4 @@ function DynamicDataComponent({ path, component: Component, title }) { // Added 
   return <Component data={data} title={title} />;
 }
 
-export default DynamicDataComponent;
+export default DynamicDataComponent; 

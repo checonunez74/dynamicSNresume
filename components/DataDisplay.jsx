@@ -8,18 +8,8 @@ const DataDisplay = ({ title, data }) => {
     return keys.every(key => !isNaN(key));
   };
 
-    // Helper function to check if section needs numbered list rendering
-  const needsNumberedListRendering = (sectionKey) => {
-    return ['skills', 'certifications', 'publications'].includes(sectionKey);
-  };
-
   // LEVEL 1: Render each section's content
   const renderSectionContent = (key, content) => {
-    // Special handling for sections that need numbered list rendering
-    if (needsNumberedListRendering(key)) {
-      return renderNumberedListSection(key, content);
-    }
-    
     // Handle numbered objects (education/experience)
     if (isNumberedObject(content)) {
       return renderNumberedItems(content);
@@ -45,85 +35,6 @@ const DataDisplay = ({ title, data }) => {
     
     // Handle primitive values
     return <div style={{ marginLeft: '20px' }}>{content}</div>;
-  };
-
-    // Helper function for Skills, Certifications, and Publications
-  const renderNumberedListSection = (sectionKey, items) => {
-    // If items is directly an object with numbered keys
-    if (isNumberedObject(items)) {
-      return (
-        <div style={{ marginLeft: '20px' }}>
-          <div style={{ 
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px'
-          }}>
-            {Object.values(items).map((item, index) => (
-              <div 
-                key={index}
-                style={{
-                  backgroundColor: '#f5f5f5',
-                  padding: '10px 15px',
-                  borderRadius: '8px',
-                  fontSize: '14px',
-                  lineHeight: '1.4'
-                }}
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-    }
-
-    // For nested structure (like skills with categories)
-    return (
-      <div style={{ marginLeft: '20px' }}>
-        {Object.entries(items).map(([category, categoryItems]) => (
-          <div key={category} style={{ marginBottom: '20px' }}>
-            <h3 style={{ 
-              textTransform: 'capitalize',
-              color: '#444',
-              fontSize: '16px',
-              marginBottom: '10px'
-            }}>
-              {category.replace(/_/g, ' ')}
-            </h3>
-            <div style={{ 
-              marginLeft: '20px',
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '10px'
-            }}>
-              {Object.values(categoryItems).map((item, index) => (
-                <div 
-                  key={index}
-                  style={{
-                    backgroundColor: '#f5f5f5',
-                    padding: '8px 15px',
-                    borderRadius: '8px',
-                    fontSize: '14px',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
-                    // Different styling for different sections
-                    ...(sectionKey === 'certifications' && {
-                      width: '100%',
-                      padding: '12px 15px'
-                    }),
-                    ...(sectionKey === 'publications' && {
-                      width: '100%',
-                      fontStyle: 'italic'
-                    })
-                  }}
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    );
   };
 
   // LEVEL 2: Render numbered items (education/experience entries)
@@ -240,4 +151,4 @@ const DataDisplay = ({ title, data }) => {
   );
 };
 
-export default DataDisplay;
+export default DataDisplay; 

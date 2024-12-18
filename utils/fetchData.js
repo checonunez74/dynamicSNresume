@@ -25,4 +25,4 @@ const fetchData = (path, callback, errorCallback) => {
   };
 };
 
-export default fetchData;
+export default fetchData; 
