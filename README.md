@@ -68,3 +68,20 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+<!-- 
+Manual Deployment: You'll need to manually deploy your website to the live channel using the Firebase CLI. This means you'll have to run firebase deploy whenever you want to update your live website.
+
+Preview Deployments: You've still set up a workflow for preview deployments. This means that whenever you create a pull request, Firebase will automatically build and deploy a preview version of your website to a unique URL. This allows you to test your changes before merging them into the main branch.
+
+Control Over Live Updates: By choosing not to set up automatic live deployments, you have more control over when your website is updated. This can be helpful if you want to review changes carefully before making them live.
+
+What Happens Next:
+
+Firebase CLI: The Firebase CLI has successfully initialized your project and created a workflow file for preview deployments ( firebase-hosting-pull-request.yml ).
+
+GitHub Integration: The Firebase CLI has also set up a connection between your Firebase project and your GitHub repository.
+
+Manual Deployment: You'll need to manually deploy your website to the live channel using the Firebase CLI.
+
+Important Note: If you decide to set up automatic live deployments later, you can use the Firebase CLI to configure this. Just run firebase init hosting:github again and follow the prompts. -->

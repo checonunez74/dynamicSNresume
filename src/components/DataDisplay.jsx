@@ -1,3 +1,6 @@
+import React from 'react';
+
+
 const DataDisplay = ({ title, data }) => {
   if (!data) return null;
 
@@ -8,9 +11,49 @@ const DataDisplay = ({ title, data }) => {
     return keys.every(key => !isNaN(key));
   };
 
-    // Helper function to check if section needs numbered list rendering
+  // Helper function to detect URLs in text
+  const isValidUrl = (string) => {
+    try {
+      new URL(string);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  };
+
+  // Helper function to check if section needs numbered list rendering
   const needsNumberedListRendering = (sectionKey) => {
     return ['skills', 'certifications', 'publications'].includes(sectionKey);
+  };
+
+  // helper function to render text with links
+  const renderTextWithLinks = (text) => {
+    // Split text by spaces to check each word
+    const words = text.split(' ');
+
+    return words.map((word, index) => {
+      if (isValidUrl(word)) {
+        return (
+          <React.Fragment key={index}>
+            <a
+            href={word}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: '#2196f3',
+              textDecoreation: 'none',
+              '&:hover': {
+                textDecoration: 'underline'
+              }
+            }}
+            >
+              {word}
+            </a>
+          </React.Fragment>
+        );
+      }
+      return word + ' ';
+    });
   };
 
   // LEVEL 1: Render each section's content
@@ -66,10 +109,14 @@ const DataDisplay = ({ title, data }) => {
                   padding: '10px 15px',
                   borderRadius: '8px',
                   fontSize: '14px',
-                  lineHeight: '1.4'
+                  boxShadow: '0 1px 2px rgb(0,0,0,0.05)',
+                  // Spread operator to add additional styles for publications
+                  width: sectionKey === 'certifications' || sectionKey === 'publicationns' ? '100%' : 'auto',
+                  padding: sectionKey === 'certifications' ? '12px 15px' : '8px 15px',
+                  fontStyle: sectionKey === 'publications' ? 'italic' : 'normal'
                 }}
               >
-                {item}
+                {sectionKey === 'publications' ? renderTextWithLinks(item) : item}
               </div>
             ))}
           </div>
@@ -116,7 +163,7 @@ const DataDisplay = ({ title, data }) => {
                     })
                   }}
                 >
-                  {item}
+                  {sectionKey === 'publications' ? renderTextWithLinks(item) : item}
                 </div>
               ))}
             </div>
