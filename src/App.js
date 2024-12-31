@@ -26,9 +26,12 @@ function App() {
     'experience',
     'skills',
     'certifications',
-    'publications',
-    
+    'publications'
   ];
+
+  const handleChange = (_, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <div className="App">
@@ -39,7 +42,7 @@ function App() {
             orientation='vertical'
             variant='scrollable'
             value={value}
-            onChange={(_, newValue) => setValue(newValue)}>
+            onChange={handleChange}>
               {sections.map((section, index) => (
                 <Tab
                   key={section}
@@ -55,7 +58,7 @@ function App() {
                 <DynamicDataComponent
                   key={section}
                   path={section}
-                  component={DataDisplay} // Changed this line
+                  component={DataDisplay} 
                   title={section.replace(/_/g, ' ')} // Added title prop
                 />
               )
