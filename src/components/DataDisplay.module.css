@@ -1,0 +1,47 @@
+/* Component-Specific Styles */
+.dataDisplay {
+  text-align: left;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  background-color: orchid;
+  text-transform: capitalize;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.subTitle {
+  text-transform: capitalize;
+  color: #444;
+  background-color: rgb(182, 235, 212);
+}
+
+.sectionContent {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.list {
+  margin-top: 5px;
+  margin-left: 20px;
+  list-style-type: disc;
+}
+
+.listItem {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.link {
+  color: #2196f3;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
