@@ -52,6 +52,7 @@ const DataDisplay = ({ title, data }) => {
   // LEVEL 1: Rendering data form FB in each section's content 
   const renderSectionsContent = (key, content) => {
     if (traversingSectionsAndRendering(key)) {
+      console.log("Found nested content")
       return renderNestedData(key, content);
     }
 
@@ -109,7 +110,7 @@ const DataDisplay = ({ title, data }) => {
   };
 
 
-  // Function for Skills, Certifications, and Publications
+  // Function for >>>>Skills, Certifications, and Publications<<<<
   const renderNestedData = (sectionKey, items) => {
     const formatKey = (key) =>
       key
@@ -117,29 +118,32 @@ const DataDisplay = ({ title, data }) => {
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
 
+    const isMiniBoxSection = sectionKey === 'skills' || sectionKey === 'certifications';
+
+
     return (
-      <div className={styles.sectionContent}>
+      <div className={isMiniBoxSection ? styles.miniBoxContainer : styles.defaultBox}>
         <strong>{formatKey(sectionKey)}:</strong>
         <div className={styles.nestedContent}>
           {Array.isArray(items)
             ? items.map((item, index) => (
-                <div key={index} className={styles.listItem}>
-                  {typeof item === 'object'
+                <div key={index} className={isMiniBoxSection ? styles.miniBox : styles.listItem}>
+                  { typeof item === 'object'
                     ? Object.entries(item).map(([nestedKey, nestedValue]) => (
                         <div key={nestedKey}>
                           <strong>{formatKey(nestedKey)}:</strong> {nestedValue}
                         </div>
                       ))
-                    : item}
+                    : `• ${item}`}
                 </div>
               ))
             : Object.entries(items).map(([key, value]) => (
-                <div key={key} className={styles.listItem}>
-                  <strong>{formatKey(key)}:</strong>{' '}
+                <div key={key} className={isMiniBoxSection ? styles.miniBox : styles.listItem}>
+                  <strong>{formatKey(key)} : </strong>{' '} 
                   {typeof value === 'object'
                     ? Object.entries(value).map(([nestedKey, nestedValue]) => (
                         <div key={nestedKey}>
-                          <strong>{formatKey(nestedKey)}:</strong> {nestedValue}
+                          <strong>{formatKey(nestedKey)} : </strong> {nestedValue}
                         </div>
                       ))
                     : value}
@@ -160,7 +164,7 @@ const DataDisplay = ({ title, data }) => {
           .map(([_, item]) => (
             <div
               key={item.institution || item.company}
-              className='backgroundBox'
+              className='backgroundBox' //<<<<<<Boxes for education and experience
             >
               {renderEducationExperienceItem(item)}
             </div>
