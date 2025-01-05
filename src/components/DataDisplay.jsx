@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './DataDisplay.module.css'
 import '../styles/global.css'
-import { color } from '@mui/system';
 
 
 const DataDisplay = ({ title, data }) => {
@@ -11,7 +10,12 @@ const DataDisplay = ({ title, data }) => {
   const isArrayObject = (obj) => {
     if (typeof obj !== 'object' || obj === null) return false;
     const keys = Object.keys(obj);
-    return keys.every(key => !isNaN(key));
+    return keys.every((key) => !isNaN(key));
+  };
+
+  // Helper function to check if section needs numbered list rendering
+  const traversingSectionsAndRendering = (sectionKey) => {
+    return ['skills', 'certifications', 'publications'].includes(sectionKey);
   };
 
   // Helper function to detect URLs in text
@@ -24,42 +28,38 @@ const DataDisplay = ({ title, data }) => {
     }
   };
 
-  // Helper function to check if section needs numbered list rendering
-  const traversingSectionsAndRendering = (sectionKey) => {
-    return ['skills', 'certifications', 'publications'].includes(sectionKey);
-  };
-
   // helper function to render text with links
   const renderTextWithLinks = (text) => {
     // Split text by spaces to check each word
     const words = text.split(' ');
-    return words.map((word, index) => 
+    return words.map((word, index) =>
       isValidUrl(word) ? (
-      <a
-        key={index}
-        href={word}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.link}
-      >
-        {word}
-      </a>
+        <a
+          key={index}
+          href={word}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.link}
+        >
+          {word}
+        </a>
       ) : (
         word + ' '
       )
     );
   };
 
-  // LEVEL 1: Rendering data form FB in each section's content 
+  // LEVEL 1: Rendering data form FB in each section's content
   const renderSectionsContent = (key, content) => {
     if (traversingSectionsAndRendering(key)) {
-      console.log("Found nested content")
+      console.log('Found nested content');
       return renderNestedData(key, content);
     }
 
     if (typeof content === 'string' && isValidUrl(content)) {
       return (
         <div className={styles.sectionContent}>
+          console.log("Found URL text")
           <strong>{key.replace(/_/g, ' ')}:</strong>{' '}
           {renderTextWithLinks(content)}
         </div>
@@ -67,6 +67,7 @@ const DataDisplay = ({ title, data }) => {
     }
 
     if (isArrayObject(content)) {
+      console.log('Found an Array -Rendering');
       return renderArrayItemsByIndex(content);
     }
 
@@ -118,7 +119,8 @@ const DataDisplay = ({ title, data }) => {
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
 
-    const isMiniBoxSection = sectionKey === 'skills' || sectionKey === 'certifications';
+    const isMiniBoxSection =
+      sectionKey === 'skills' || sectionKey === 'certifications';
 
     return (
       <div
@@ -141,7 +143,7 @@ const DataDisplay = ({ title, data }) => {
                           <strong>{formatKey(nestedKey)}:</strong> {nestedValue}
                         </div>
                       ))
-                    : `• ${item}`}
+                    : `• ${(item)}`}
                 </div>
               ))
             : Object.entries(items).map(([key, value]) => (
@@ -156,7 +158,8 @@ const DataDisplay = ({ title, data }) => {
                             isMiniBoxSection ? styles.miniBox : styles.listItem
                           }
                         >
-                          {nestedValue}
+                        {/* Nested values for Publications */}
+                          {renderTextWithLinks(nestedValue)}
                         </div>
                       ))
                     : value}
@@ -167,9 +170,9 @@ const DataDisplay = ({ title, data }) => {
     );
   };
 
-  // LEVEL 2: Render items by index(education/experience entries)
+  // LEVEL 2: Render items by index >>>>>>>education/experience entries<<<<<<<<<
   const renderArrayItemsByIndex = (items) => {
-    console.log("Education and experience items are rendered by index")
+    console.log('Education and experience items are rendered by index');
     return (
       <div style={{ marginLeft: '20px' }}>
         {Object.entries(items)
@@ -177,7 +180,7 @@ const DataDisplay = ({ title, data }) => {
           .map(([_, item]) => (
             <div
               key={item.institution || item.company}
-              className='backgroundBox' //<<<<<<Boxes for education and experience
+              className="backgroundBox" //<<<<<<Boxes for education and experience
             >
               {renderEducationExperienceItem(item)}
             </div>
@@ -188,31 +191,29 @@ const DataDisplay = ({ title, data }) => {
 
   // LEVEL 3: Render individual education/experience items
   const renderEducationExperienceItem = (item) => {
-    console.log("Rendering Education and Experience function")
+    console.log('Rendering Education and Experience function');
     return Object.entries(item).map(([key, value]) => {
-          // Special handling for >>>>>responsibilities<<<<< array
-          if (key === 'responsibilities' && Array.isArray(value)) {
-            return (
-              <div key={key} className={styles.subTitle}>
-                <strong>
-                  {key.replace(/_/g, ' ')}:
-                </strong>
-                <ul className={styles.list}>
-                  {value.map((resp, i) => (
-                    <li key={i} className={styles.listItem}>{resp}</li>
-                  ))}
-                </ul>
-              </div>
-            );
-          }
+      // Special handling for >>>>>responsibilities<<<<< array
+      if (key === 'responsibilities' && Array.isArray(value)) {
+        return (
+          <div key={key} className={styles.subTitle}>
+            <strong>{key.replace(/_/g, ' ')}:</strong>
+            <ul className={styles.list}>
+              {value.map((resp, i) => (
+                <li key={i} className={styles.listItem}>
+                  {resp}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      }
 
       return (
         <div key={key} style={{ marginBottom: '8px' }}>
-          <strong className={styles.subTitle}>
-            {key.replace(/_/g, ' ')}:
-          </strong>{' '}
+          <strong className={styles.subTitle}>{key.replace(/_/g, ' ')}:</strong>{' '}
           {/* Value is for Educations/Experience Not Responsabilities Nor Skills */}
-          <span style={{ color: '#667' }}>{value}</span> 
+          <span style={{ color: '#667' }}>{value}</span>
         </div>
       );
     });
