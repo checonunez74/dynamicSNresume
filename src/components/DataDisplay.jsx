@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './DataDisplay.module.css'
 import '../styles/global.css'
+import { red } from '@mui/material/colors';
 
 
 const DataDisplay = ({ title, data }) => {
@@ -51,11 +52,12 @@ const DataDisplay = ({ title, data }) => {
 
   // LEVEL 1: Rendering data form FB in each section's content
   const renderSectionsContent = (key, content) => {
+    // Executes renderNestedData function when finds nested objects
     if (traversingSectionsAndRendering(key)) {
       console.log('Found nested content');
       return renderNestedData(key, content);
     }
-
+    // Looks for URL strings
     if (typeof content === 'string' && isValidUrl(content)) {
       return (
         <div className={styles.sectionContent}>
@@ -65,7 +67,7 @@ const DataDisplay = ({ title, data }) => {
         </div>
       );
     }
-
+    // Looks for Array objects
     if (isArrayObject(content)) {
       console.log('Found an Array -Rendering');
       return renderArrayItemsByIndex(content);
@@ -87,14 +89,15 @@ const DataDisplay = ({ title, data }) => {
         </div>
       );
     }
-
+    // Finds not nested objects –Consultant
     if (typeof content === 'object' && content !== null) {
+      console.log("Consultant section")
       return (
         <div className={styles.sectionContent}>
-          <strong>{key.replace(/_/g, ' ')}:</strong>
+          {/* <strong>{key.replace(/_/g, ' ')}:</strong> */}
           {Object.entries(content).map(([nestedKey, nestedValue]) => (
             <div key={nestedKey} className={styles.listItem}>
-              <strong>{nestedKey.replace(/_/g, ' ')}:</strong>{' '}
+              {/* <strong>{nestedKey.replace(/_/g, ' ')}:</strong>{' '} */}
               {typeof nestedValue === 'object'
                 ? renderNestedData(nestedKey, nestedValue)
                 : nestedValue}
@@ -103,10 +106,11 @@ const DataDisplay = ({ title, data }) => {
         </div>
       );
     }
-
+    // Renders not nested objects and items –Summary
     return (
       <div className={styles.sectionContent}>
-        <strong>{key.replace(/_/g, ' ')}:</strong> {content}
+        {/* <strong>{key.replace(/_/g, ' ')}:</strong> */}
+        <div className={styles.defaultBox}>{content}</div>
       </div>
     );
   };
@@ -223,7 +227,9 @@ const DataDisplay = ({ title, data }) => {
     <div className={styles.dataDisplay}>
       <h1 className={styles.title}>{title}</h1>
       {Object.entries(data).map(([key, content]) => (
-        <div key={key}>{renderSectionsContent(key, content)}</div>
+        <div key={key}>
+          {renderSectionsContent(key, content)}
+        </div>
       ))}
     </div>
   );
