@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './DataDisplay.module.css'
 import '../styles/global.css'
+import { color } from '@mui/system';
 
 
 const DataDisplay = ({ title, data }) => {
@@ -109,7 +110,6 @@ const DataDisplay = ({ title, data }) => {
     );
   };
 
-
   // Function for >>>>Skills, Certifications, and Publications<<<<
   const renderNestedData = (sectionKey, items) => {
     const formatKey = (key) =>
@@ -120,15 +120,22 @@ const DataDisplay = ({ title, data }) => {
 
     const isMiniBoxSection = sectionKey === 'skills' || sectionKey === 'certifications';
 
-
     return (
-      <div className={isMiniBoxSection ? styles.miniBoxContainer : styles.defaultBox}>
-        <strong>{formatKey(sectionKey)}:</strong>
+      <div
+        className={
+          isMiniBoxSection ? styles.miniBoxContainer : styles.defaultBox
+        }
+      >
         <div className={styles.nestedContent}>
           {Array.isArray(items)
             ? items.map((item, index) => (
-                <div key={index} className={isMiniBoxSection ? styles.miniBox : styles.listItem}>
-                  { typeof item === 'object'
+                <div
+                  key={index}
+                  className={
+                    isMiniBoxSection ? styles.miniBox : styles.listItem
+                  }
+                >
+                  {typeof item === 'object'
                     ? Object.entries(item).map(([nestedKey, nestedValue]) => (
                         <div key={nestedKey}>
                           <strong>{formatKey(nestedKey)}:</strong> {nestedValue}
@@ -138,12 +145,18 @@ const DataDisplay = ({ title, data }) => {
                 </div>
               ))
             : Object.entries(items).map(([key, value]) => (
-                <div key={key} className={isMiniBoxSection ? styles.miniBox : styles.listItem}>
-                  <strong>{formatKey(key)} : </strong>{' '} 
+                <div key={key}>
+                  {/* Sub-titles for Skills */}
+                  <strong>{formatKey(key)} : </strong>{' '}
                   {typeof value === 'object'
                     ? Object.entries(value).map(([nestedKey, nestedValue]) => (
-                        <div key={nestedKey}>
-                          <strong>{formatKey(nestedKey)} : </strong> {nestedValue}
+                        <div
+                          key={nestedKey}
+                          className={
+                            isMiniBoxSection ? styles.miniBox : styles.listItem
+                          }
+                        >
+                          {nestedValue}
                         </div>
                       ))
                     : value}
@@ -198,24 +211,11 @@ const DataDisplay = ({ title, data }) => {
           <strong className={styles.subTitle}>
             {key.replace(/_/g, ' ')}:
           </strong>{' '}
-          <span style={{ color: '#667' }}>{value}</span>
+          {/* Value is for Educations/Experience Not Responsabilities Nor Skills */}
+          <span style={{ color: '#667' }}>{value}</span> 
         </div>
       );
     });
-  };
-
-  // Handle nested objects for other sections
-  const renderNestedObject = (obj) => {
-    return (
-      <div className={styles.sectionContent}>
-        {Object.entries(obj).map(([key, value]) => (
-          <div key={key} className={styles.nestedObject}>
-            <strong>{key.replace(/_/g, ' ')}:</strong>{' '}
-            {typeof value === 'object' ? renderNestedObject(value) : value}
-          </div>
-        ))}
-      </div>
-    );
   };
 
   return (
