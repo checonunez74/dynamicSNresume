@@ -151,9 +151,9 @@ const DataDisplay = ({ title, data }) => {
                 </div>
               ))
             : Object.entries(items).map(([key, value]) => (
-                <div key={key}>
+                <div key={key} className={ styles.subTitle}>
                   {/* Sub-titles for Skills */}
-                  <strong>{formatKey(key)} : </strong>{' '}
+                  <strong>{formatKey(key)} : </strong>{' '}<br />
                   {typeof value === 'object'
                     ? Object.entries(value).map(([nestedKey, nestedValue]) => (
                         <div
