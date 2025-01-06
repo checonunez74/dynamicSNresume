@@ -1,6 +1,5 @@
 import {Box, Tabs, Tab } from '@mui/material';
 import { useState } from 'react';
-import SkillsDisplay from './components/DataDisplay.jsx';
 import DynamicDataComponent from '../src/hooks/useFirebaseData.jsx';
 import DataDisplay from './components/DataDisplay.jsx';
 import './App.css';
@@ -21,6 +20,7 @@ function App() {
   };
 
   const sections = [
+    'consultant',
     'summary',
     'education',
     'experience',
