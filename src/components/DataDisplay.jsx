@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './DataDisplay.module.css'
 import '../styles/global.css'
-import { red } from '@mui/material/colors';
 
 
 const DataDisplay = ({ title, data }) => {
@@ -166,7 +165,7 @@ const DataDisplay = ({ title, data }) => {
                           {renderTextWithLinks(nestedValue)}
                         </div>
                       ))
-                    : value}
+                    : renderTextWithLinks(value)}
                 </div>
               ))}
         </div>
