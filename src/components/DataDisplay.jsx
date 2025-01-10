@@ -228,6 +228,7 @@ const DataDisplay = ({ title, data }) => {
       {Object.entries(data).map(([key, content]) => (
         <div key={key}>
           {renderSectionsContent(key, content)}
+          {console.log("renderedSectionsContent called")}          
         </div>
       ))}
     </div>

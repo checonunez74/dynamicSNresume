@@ -15,6 +15,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-console.log('Connected to the API Key:', process.env.REACT_APP_API_KEY);
-
 export { db };
