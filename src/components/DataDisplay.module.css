@@ -83,3 +83,41 @@
 .link:hover {
   text-decoration: underline;
 }
+
+/* Responsive Design: Media Queries */
+@media (max-width: 768px) {
+  .miniBox {
+    flex: 1 1 calc(100% - 10px); /* Full width for smaller screens */
+  }
+
+  .sectionContent {
+    margin-left: 10px; /* Reduce margin for smaller screens */
+  }
+
+  .list {
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dataDisplay {
+    padding: 10px; /* Reduce padding on very small devices */
+  }
+
+  .defaultBox {
+    padding: 10px; /* Adjust padding for smaller devices */
+  }
+
+  .miniBox {
+    font-size: 12px; /* Reduce font size for compact view */
+    padding: 8px; /* Adjust padding */
+  }
+
+  .title {
+    font-size: 18px; /* Slightly smaller title font size */
+  }
+
+  .subTitle {
+    font-size: 16px; /* Adjust subtitle font size */
+  }
+}

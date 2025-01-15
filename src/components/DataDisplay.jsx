@@ -60,7 +60,6 @@ const DataDisplay = ({ title, data }) => {
     if (typeof content === 'string' && isValidUrl(content)) {
       return (
         <div className={styles.sectionContent}>
-          console.log("Found URL text")
           <strong>{key.replace(/_/g, ' ')}:</strong>{' '}
           {renderTextWithLinks(content)}
         </div>

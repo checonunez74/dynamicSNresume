@@ -1,87 +1,25 @@
-# Getting Started with Create React App
+# Reqct app for dynamic Resume
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is design to portrait the way you can connect a NRDB from Firebase to a ReactJS application.
 
-## Available Scripts
+## Code composition
 
-In the project directory, you can run:
+In the project 
 
-### `npm start`
+### `left panel`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-<!-- 
-Manual Deployment: You'll need to manually deploy your website to the live channel using the Firebase CLI. This means you'll have to run firebase deploy whenever you want to update your live website.
-
-Preview Deployments: You've still set up a workflow for preview deployments. This means that whenever you create a pull request, Firebase will automatically build and deploy a preview version of your website to a unique URL. This allows you to test your changes before merging them into the main branch.
-
-Control Over Live Updates: By choosing not to set up automatic live deployments, you have more control over when your website is updated. This can be helpful if you want to review changes carefully before making them live.
-
-What Happens Next:
-
-Firebase CLI: The Firebase CLI has successfully initialized your project and created a workflow file for preview deployments ( firebase-hosting-pull-request.yml ).
-
-GitHub Integration: The Firebase CLI has also set up a connection between your Firebase project and your GitHub repository.
-
-Manual Deployment: You'll need to manually deploy your website to the live channel using the Firebase CLI.
-
-Important Note: If you decide to set up automatic live deployments later, you can use the Firebase CLI to configure this. Just run firebase init hosting:github again and follow the prompts. -->
+	1.	Component Structure
+	•	The component has a div with the class name styles.dataDisplay, which likely serves as a container for the entire layout, including the menu.
+	•	The title (from props.title) is rendered as an <h1> element.
+	2.	Dynamic Rendering of Menu Items
+	•	The left menu items (e.g., Consultant, Summary, Education, etc.) are dynamically generated based on the data prop passed to the component.
+	•	The line Object.entries(data).map(([key, content]) => (...) iterates over the data object, where:
+	•	key represents the name of the section (e.g., Consultant, Summary, etc.).
+	•	content represents the associated content for that section (details like email, LinkedIn, etc.).
+	3.	Section Content Rendering
+	•	For each section, the function renderSectionsContent(key, content) is called, which generates the content of that section.
+	•	This ensures that each section’s display logic is abstracted within the renderSectionsContent function.
+	4.	Logging for Debugging
+	•	A console.log statement is added to debug when renderSectionsContent is executed, verifying that the section content is rendered correctly.
+	5.	Class-based Styling
+	•	The use of styles.dataDisplay and styles.title indicates that CSS modules are being used for styling. These classes likely define the layout and style for the menu on the left and the title.
