@@ -6,7 +6,7 @@ import Sidebar from './features/sidebar/Sidebar'; // Import Sidebar
 import './App.css';
 
 function App() {
-  const [selectedSection, setSelectedSection] = useState('certifications');
+  const [selectedSection, setSelectedSection] = useState('summary');
 
   const sections = [
     'consultant',

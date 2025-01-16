@@ -32,7 +32,7 @@ return (
       ref={sidebarRef}
       className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}
     >
-      <h2 className={styles.sidebarTitle}>Menu</h2>
+      <h2 className={styles.sidebarTitle}>Profile</h2>
 
       <ul>
         {data.map((section) => (
