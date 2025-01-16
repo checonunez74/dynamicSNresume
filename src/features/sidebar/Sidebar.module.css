@@ -1,0 +1,71 @@
+/* 🔹 Sidebar Default (Hidden) */
+.sidebar {
+  width: 250px;
+  background-color: #3b82f6;
+  height: 100vh;
+  padding: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  transform: translateX(-100%); /* Initially hidden */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* 🔹 Show Sidebar When Open */
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* 🔹 Sidebar Menu */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  border-bottom: 1px solid #ddd;
+  color: white;
+  text-transform: capitalize;
+}
+
+.sidebar li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 🔹 Hamburger Menu Button */
+.hamburger {
+  display: block;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+/* 🔹 Close Button */
+.closeButton {
+  display: block;
+  margin-top: 20px;
+  background: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* 🔹 Mobile Mode */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .hamburger {
+    font-size: 18px;
+  }
+}

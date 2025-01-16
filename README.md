@@ -1,4 +1,4 @@
-# Reqct app for dynamic Resume
+# ReactJS app for dynamic Resume
 
 This project is design to portrait the way you can connect a NRDB from Firebase to a ReactJS application.
 
