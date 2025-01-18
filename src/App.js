@@ -20,7 +20,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header"></header>
+      <header className="App-header">
+        
+      </header>
       <main>
         <Box sx={{ display: 'flex' }}>
           {/* 🔹 Sidebar Component */}
