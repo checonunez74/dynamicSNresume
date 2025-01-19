@@ -48,15 +48,32 @@
   cursor: pointer;
 }
 
-/* 🔹 Close Button */
-.closeButton {
+.profileImage {
   display: block;
-  margin-top: 20px;
-  background: white;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  cursor: pointer;
+  position: fixed;
+  color: white;
+  top: .5%;
+  left: 33%;
+  margin: 0 auto; /* Centers the image */
+  width: 80px; /* Adjust size as needed */
+}
+
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profileImage {
+  left: auto;
+  width: 80px;  /* Adjust image size */
+  margin-bottom: 10px; /* Adds spacing between image and text */
+}
+
+.sidebarTitle {
+  color: #ddd;
+  margin-top: 30%; /* Adds more spacing below the image */
 }
 
 /* 🔹 Mobile Mode */
