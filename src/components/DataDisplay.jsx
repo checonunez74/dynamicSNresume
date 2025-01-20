@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './DataDisplay.module.css'
 import '../styles/global.css'
-import { red } from '@mui/material/colors';
 
 
 const DataDisplay = ({ title, data }) => {
@@ -61,7 +60,6 @@ const DataDisplay = ({ title, data }) => {
     if (typeof content === 'string' && isValidUrl(content)) {
       return (
         <div className={styles.sectionContent}>
-          console.log("Found URL text")
           <strong>{key.replace(/_/g, ' ')}:</strong>{' '}
           {renderTextWithLinks(content)}
         </div>
@@ -151,9 +149,9 @@ const DataDisplay = ({ title, data }) => {
                 </div>
               ))
             : Object.entries(items).map(([key, value]) => (
-                <div key={key}>
+                <div key={key} className={ styles.subTitle}>
                   {/* Sub-titles for Skills */}
-                  <strong>{formatKey(key)} : </strong>{' '}
+                  <strong>{formatKey(key)} : </strong>{' '}<br />
                   {typeof value === 'object'
                     ? Object.entries(value).map(([nestedKey, nestedValue]) => (
                         <div
@@ -166,7 +164,7 @@ const DataDisplay = ({ title, data }) => {
                           {renderTextWithLinks(nestedValue)}
                         </div>
                       ))
-                    : value}
+                    : renderTextWithLinks(value)}
                 </div>
               ))}
         </div>
@@ -229,6 +227,7 @@ const DataDisplay = ({ title, data }) => {
       {Object.entries(data).map(([key, content]) => (
         <div key={key}>
           {renderSectionsContent(key, content)}
+          {console.log("renderedSectionsContent called")}          
         </div>
       ))}
     </div>

@@ -22,6 +22,14 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-image {
+  width: 100px;
+  margin-bottom: -10px; /* Moves image slightly over the text */
 }
 
 .App-link {

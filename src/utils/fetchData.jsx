@@ -1,4 +1,4 @@
-import { ref, onValue, off } from 'firebase/database';
+import { ref, onValue } from 'firebase/database';
 import { db } from '../features/authentication/services/api/firebase/firebaseConfig';
 
 const fetchData = (path, callback, errorCallback) => {
@@ -21,7 +21,7 @@ const fetchData = (path, callback, errorCallback) => {
 
   // Return unsubscribe function
   return () => {
-    off(dbRef);
+    return unsubscribe;
   };
 };
 
