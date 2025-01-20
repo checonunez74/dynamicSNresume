@@ -38,7 +38,7 @@ function DynamicDataComponent({ path, component: Component, title }) { // Added 
       <div style={{ 
         padding: '20px', 
         textAlign: 'center',
-        color: '#666' 
+        color: '#667' 
       }}>
         Loading {path}...
       </div>
@@ -62,7 +62,7 @@ function DynamicDataComponent({ path, component: Component, title }) { // Added 
       <div style={{ 
         padding: '20px', 
         textAlign: 'center',
-        color: '#666' 
+        color: '#667' 
       }}>
         No {path} data available
       </div>

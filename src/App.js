@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { useState } from 'react';
 import DynamicDataComponent from '../src/hooks/useFirebaseData.jsx';
 import DataDisplay from './components/DataDisplay.jsx';
