@@ -9,20 +9,19 @@ function App() {
   const [selectedSection, setSelectedSection] = useState('summary');
 
   const sections = [
-    'consultant',
+    'Contact_Information',
     'summary',
     'education',
     'experience',
     'skills',
     'certifications',
     'publications',
+    
   ];
 
   return (
     <div className="App">
-      <header className="App-header">
-        
-      </header>
+      <header className="App-header"></header>
       <main>
         <Box sx={{ display: 'flex' }}>
           {/* 🔹 Sidebar Component */}
@@ -34,8 +33,8 @@ function App() {
             <DynamicDataComponent
               key={selectedSection}
               path={selectedSection}
-              component={DataDisplay}
               title={selectedSection.replace(/_/g, ' ')}
+              component={DataDisplay}
             />
           </Box>
         </Box>
