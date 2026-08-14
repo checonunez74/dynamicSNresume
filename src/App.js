@@ -1,68 +1,39 @@
-import {Box, Tabs, Tab } from '@mui/material';
+import { Box } from '@mui/material';
 import { useState } from 'react';
-import SkillsDisplay from './components/DataDisplay.jsx';
-import DynamicDataComponent from '../src/hooks/useFirebaseData.jsx';
+import DynamicDataComponent from './hooks/useFirebaseData.jsx';
 import DataDisplay from './components/DataDisplay.jsx';
+import Sidebar from './features/sidebar/Sidebar';
+import DownloadResumeButton from './components/DownloadResumeButton.jsx';
 import './App.css';
 
 function App() {
-  const [value, setValue] = useState(0);
-
-  const testData = {
-  computer_languages: ["Java", "JavaScript"],
-  tools: ["VS Code", "Git"]
-  };
-
-  const allyProps = (index) => {
-    return {
-      id: `vertical-tab-${index}`,
-      'aria-controls': `vertical-tabpanel-${index}`,
-    };
-  };
+  const [selectedSection, setSelectedSection] = useState('summary');
 
   const sections = [
+    'Contact_Information',
     'summary',
     'education',
     'experience',
     'skills',
     'certifications',
-    'publications'
+    'publications',
   ];
-
-  const handleChange = (_, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <div className="App">
+      <DownloadResumeButton variant="fixed" />
       <header className="App-header"></header>
       <main>
         <Box sx={{ display: 'flex' }}>
-          <Tabs 
-            orientation='vertical'
-            variant='scrollable'
-            value={value}
-            onChange={handleChange}>
-              {sections.map((section, index) => (
-                <Tab
-                  key={section}
-                  label={section.replace(/_/g, ' ')}
-                  {...allyProps(index)}
-                />
-              ))}
-          </Tabs>
+          <Sidebar data={sections} onSelectSection={setSelectedSection} />
 
-          <Box role='tabpanel' sx={{ width: '100%', p: 3}}>
-            {sections.map((section, index) => (
-              value === index && (
-                <DynamicDataComponent
-                  key={section}
-                  path={section}
-                  component={DataDisplay} 
-                  title={section.replace(/_/g, ' ')} // Added title prop
-                />
-              )
-            ))}
+          <Box role="tabpanel" sx={{ width: '100%', p: 3 }}>
+            <DynamicDataComponent
+              key={selectedSection}
+              path={selectedSection}
+              title={selectedSection.replace(/_/g, ' ')}
+              component={DataDisplay}
+            />
           </Box>
         </Box>
       </main>

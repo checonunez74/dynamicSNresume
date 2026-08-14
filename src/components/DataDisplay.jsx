@@ -13,12 +13,98 @@ const DataDisplay = ({ title, data }) => {
 
   // Helper function to detect URLs in text
   const isValidUrl = (string) => {
+    if (typeof string !== 'string') return false;
     try {
       new URL(string);
       return true;
     } catch (_) {
-      return false;
+      // Allow bare domains like www.linkedin.com/...
+      try {
+        new URL(`https://${string}`);
+        return (
+          string.includes('.') &&
+          !string.includes(' ') &&
+          !string.includes('@')
+        );
+      } catch {
+        return false;
+      }
     }
+  };
+
+  const toHref = (string) => {
+    try {
+      new URL(string);
+      return string;
+    } catch (_) {
+      return `https://${string}`;
+    }
+  };
+
+  const formatLabel = (key) =>
+    key
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+
+  const cardStyle = {
+    marginLeft: '20px',
+    marginBottom: '20px',
+    padding: '15px',
+    backgroundColor: '#f5f5f5',
+    borderRadius: '8px',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+    lineHeight: 1.6,
+  };
+
+  const renderContactInformation = (content) => {
+    let fields =
+      content && typeof content === 'object' && !Array.isArray(content)
+        ? { ...content }
+        : {};
+
+    // Flatten { name, contact: { email, phone, ... } } shapes
+    if (fields.contact && typeof fields.contact === 'object') {
+      const { contact, ...rest } = fields;
+      fields = { ...rest, ...contact };
+    }
+
+    return (
+      <div style={cardStyle}>
+        {Object.entries(fields).map(([fieldKey, fieldValue]) => {
+          if (typeof fieldValue === 'object' && fieldValue !== null) {
+            return null;
+          }
+
+          const value = String(fieldValue ?? '');
+
+          return (
+            <div key={fieldKey} style={{ marginBottom: '14px' }}>
+              <strong
+                style={{
+                  display: 'block',
+                  color: '#444',
+                  marginBottom: '4px',
+                }}
+              >
+                {formatLabel(fieldKey)} :
+              </strong>
+              {isValidUrl(value) ? (
+                <a
+                  href={toHref(value)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: '#2196f3', textDecoration: 'none' }}
+                >
+                  {value}
+                </a>
+              ) : (
+                <span style={{ color: '#667' }}>{value}</span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   // Helper function to check if section needs numbered list rendering
@@ -36,16 +122,13 @@ const DataDisplay = ({ title, data }) => {
         return (
           <React.Fragment key={index}>
             <a
-              href={word}
+              href={toHref(word)}
               target="_blank"
               rel="noopener noreferrer"
               style={{
                 color: '#2196f3',
                 textDecoration: 'none',
-                '&:hover': {
-                  textDecoration: 'underline'
-                }
-            }}
+              }}
             >
               {word}
             </a>
@@ -96,6 +179,15 @@ const DataDisplay = ({ title, data }) => {
       );
     }
     
+  // Contact Information — one gray card, stacked label/value (matches Summary card look)
+  if (
+    (key === 'Contact_Information' || key === 'contact' || key === 'consultant') &&
+    typeof content === 'object' &&
+    content !== null
+  ) {
+    return renderContactInformation(content);
+  }
+
   // Handle objects (nested key-value pairs)
   if (typeof content === 'object' && content !== null) {
     console.log("Using the handle objects function")
@@ -124,11 +216,15 @@ const DataDisplay = ({ title, data }) => {
       </div>
     );
   }
-    // Handle primitive values
+
+    // Handle primitive values (e.g. Summary) — gray card
     return (
-      <div style={{ marginLeft: '20px', marginBottom: '10px' }}>
-        <strong>{key.replace(/_/g, ' ')}:</strong> {content}
-      </div>);
+      <div style={cardStyle}>
+        {typeof content === 'string' && isValidUrl(content)
+          ? renderTextWithLinks(content)
+          : content}
+      </div>
+    );
   };
 
 // Helper function for Skills, Certifications, and Publications
@@ -142,6 +238,62 @@ const DataDisplay = ({ title, data }) => {
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(' ');
       };
+
+      // Skills page: category labels + wrapping gray chips (no bullets)
+      if (sectionKey === 'skills') {
+        const chipStyle = {
+          display: 'inline-block',
+          backgroundColor: '#f5f5f5',
+          padding: '8px 12px',
+          borderRadius: '6px',
+          fontSize: '14px',
+          color: '#555',
+          margin: '0 8px 8px 0',
+          boxShadow: '0 1px 2px rgba(0, 0, 0, 0.08)',
+          whiteSpace: 'nowrap',
+        };
+
+        const getChipLabels = (value) => {
+          if (Array.isArray(value)) {
+            return value.map((item) =>
+              typeof item === 'object' && item !== null
+                ? Object.values(item).join(' ')
+                : String(item)
+            );
+          }
+          if (typeof value === 'object' && value !== null) {
+            // e.g. { Temenos: 5, JavaScript: 4 } → chip per key
+            return Object.keys(value);
+          }
+          return [String(value)];
+        };
+
+        return (
+          <div style={{ marginLeft: '20px' }}>
+            {Object.entries(items || {}).map(([categoryKey, categoryValue]) => (
+              <div key={categoryKey} style={{ marginBottom: '24px' }}>
+                <strong
+                  style={{
+                    display: 'block',
+                    color: '#444',
+                    marginBottom: '10px',
+                    fontSize: '16px',
+                  }}
+                >
+                  {formatKey(categoryKey)} :
+                </strong>
+                <div>
+                  {getChipLabels(categoryValue).map((label, index) => (
+                    <div key={`${categoryKey}-${index}`} style={chipStyle}>
+                      {label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      }
 
       // Helper function to validate URLs
       const isValidUrl = (string) => {
