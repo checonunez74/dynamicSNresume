@@ -1,4 +1,6 @@
 import React from 'react';
+import styles from './DataDisplay.module.css'
+import '../styles/global.css'
 
 
 const DataDisplay = ({ title, data }) => {
@@ -8,7 +10,12 @@ const DataDisplay = ({ title, data }) => {
   const isArrayObject = (obj) => {
     if (typeof obj !== 'object' || obj === null) return false;
     const keys = Object.keys(obj);
-    return keys.every(key => !isNaN(key));
+    return keys.every((key) => !isNaN(key));
+  };
+
+  // Helper function to check if section needs numbered list rendering
+  const traversingSectionsAndRendering = (sectionKey) => {
+    return ['skills', 'certifications', 'publications'].includes(sectionKey);
   };
 
   // Helper function to detect URLs in text
@@ -139,40 +146,56 @@ const DataDisplay = ({ title, data }) => {
     });
   };
 
-  // LEVEL 1: Rendering data form FB in each section's content 
+  // LEVEL 1: Rendering data form FB in each section's content
   const renderSectionsContent = (key, content) => {
-    console.log("Contents data has: ", content)
-   
-  ///////////////
-    // Special handling for sections that need numbered list rendering
+    // Executes renderNestedData function when finds nested objects
     if (traversingSectionsAndRendering(key)) {
-      console.log("using traversingSectionsAndRender conditional")
+      console.log('Found nested content');
       return renderNestedData(key, content);
     }
-
+    // Looks for URL strings
     if (typeof content === 'string' && isValidUrl(content)) {
-      console.log("content is a String", content)
       return (
-        <div style={{ marginLeft: '20px', marginBottom: '10px' }}>
+        <div className={styles.sectionContent}>
           <strong>{key.replace(/_/g, ' ')}:</strong>{' '}
           {renderTextWithLinks(content)}
         </div>
       );
     }
-    
-    // Handle array objects (education/experience)
+    // Looks for Array objects
     if (isArrayObject(content)) {
+      console.log('Found an Array -Rendering');
       return renderArrayItemsByIndex(content);
     }
-    
-    // Handle arrays
+
     if (Array.isArray(content)) {
-      console.log("content is an Array")
       return (
-        <div style={{ marginLeft: '20px' }}>
-          {content.map((item, index) => (
-            <div key={index} style={{ marginBottom: '5px' }}>
-              {isValidUrl(item) ? renderTextWithLinks(item) : `${item}`}
+        <div className={styles.sectionContent}>
+          <strong>{key.replace(/_/g, ' ')}:</strong>
+          <ul className={styles.list}>
+            {content.map((item, index) => (
+              <li key={index} className={styles.listItem}>
+                {typeof item === 'object'
+                  ? renderNestedData(key, item) // Process nested objects
+                  : item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+    // Finds not nested objects –Consultant
+    if (typeof content === 'object' && content !== null) {
+      console.log("Consultant section")
+      return (
+        <div className={styles.sectionContent}>
+          {/* <strong>{key.replace(/_/g, ' ')}:</strong> */}
+          {Object.entries(content).map(([nestedKey, nestedValue]) => (
+            <div key={nestedKey} className={styles.listItem}>
+              {/* <strong>{nestedKey.replace(/_/g, ' ')}:</strong>{' '} */}
+              {typeof nestedValue === 'object'
+                ? renderNestedData(nestedKey, nestedValue)
+                : nestedValue}
             </div>
           ))}
         </div>
@@ -192,27 +215,9 @@ const DataDisplay = ({ title, data }) => {
   if (typeof content === 'object' && content !== null) {
     console.log("Using the handle objects function")
     return (
-      <div style={{ marginLeft: '20px' }}>
-        {Object.entries(content).map(([nestedKey, nestedValue]) => (
-          <div key={nestedKey} style={{ marginBottom: '10px' }}>
-            <strong>{nestedKey.replace(/_/g, ' ')}:</strong>
-            {Array.isArray(nestedValue) ? (
-              <div style={{ marginLeft: '20px' }}>
-                {nestedValue.map((url, index) =>
-                  isValidUrl(url) ? (
-                    <div key={index} style={{ marginBottom: '5px' }}>
-                      {renderTextWithLinks(url)}
-                    </div>
-                  ) : (
-                    <div key={index}>{url}</div>
-                  )
-                )}
-              </div>
-            ) : (
-              renderSectionsContent(nestedKey, nestedValue)
-            )}
-          </div>
-        ))}
+      <div className={styles.sectionContent}>
+        {/* <strong>{key.replace(/_/g, ' ')}:</strong> */}
+        <div className={styles.defaultBox}>{content}</div>
       </div>
     );
   }
@@ -227,17 +232,13 @@ const DataDisplay = ({ title, data }) => {
     );
   };
 
-// Helper function for Skills, Certifications, and Publications
+  // Function for >>>>Skills, Certifications, and Publications<<<<
   const renderNestedData = (sectionKey, items) => {
-      console.log("Using Skills, Certificates and PUblications Function")
-      //Format keys text function
-      const formatKey = (key) => {
-        //removing underscore from text in keys
-        return key
-          .split('_')
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
-      };
+    const formatKey = (key) =>
+      key
+        .split(/[_\d]/) // Remove underscores and digits
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
 
       // Skills page: category labels + wrapping gray chips (no bullets)
       if (sectionKey === 'skills') {
@@ -304,122 +305,60 @@ const DataDisplay = ({ title, data }) => {
           return false;
         }
       };
+    const isMiniBoxSection =
+      sectionKey === 'skills' || sectionKey === 'certifications';
 
-      // LINKS -Helper function to render text with links
-      const renderTextWithLinks = (text) => {
-        const words = text.split(' ');
-        return words.map((word, index) =>
-          isValidUrl(word) ? (
-            <a
-              href={word}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: '#2196f3',
-                textDecoration: 'none',
-              }}
-              key={index}
-            >
-              {word}
-            </a>
-          ) : (
-            word + ' '
-          )
-        );
-      };
-
-      const renderNestedContent = (key, value) => {
-        // If value is a primitive, render directly
-        if (typeof value !== 'object' || value === null) {
-          return (
-            <div
-              key={key}
-              style={{
-                backgroundColor: '#f5f5f5',
-                padding: '10px 15px 10px 15px',
-                borderRadius: '8px',
-                fontSize: '14px',
-                boxShadow: '0 1px 2px rgb(0,0,0,0.05)',
-                marginBottom: '10px',
-                display: 'inline-block',
-                marginRight: '10px',
-              }}
-            >
-              <strong>{formatKey(key)}:</strong> {value}
-            </div>
-          );
+    return (
+      <div
+        className={
+          isMiniBoxSection ? styles.miniBoxContainer : styles.defaultBox
         }
-
-        // If value is an array, render each item
-        if (Array.isArray(value)) {
-          return (
-            <div key={key} style={{ marginLeft: '20px' }}>
-              <strong>{formatKey(key)}:</strong>
-              <div style={{ marginLeft: '20px' }}>
-                {value.map((item, index) =>
-                  typeof item === 'object' ? (
-                    renderNestedContent(index, item)
-                  ) : (
-                    <div
-                      key={index}
-                      style={{
-                        backgroundColor: '#f5f5f5',
-                        padding: '5px 10px',
-                        borderRadius: '8px',
-                        fontSize: '14px',
-                        boxShadow: '0 1px 2px rgb(0,0,0,0.05)',
-                        marginBottom: '10px',
-                        marginTop: '10px',
-                        display: 'inline-block',
-                        marginRight: '10px',
-                      }}
-                    >
-                      {isValidUrl(item) ? renderTextWithLinks(item) : `• ${item}`}
-                    </div>
-                  )
-                )}
-              </div>
-            </div>
-          );
-        }
-
-        // If value is an object, recurse into its properties
-        if (typeof value === 'object') {
-          {console.log("the value is an Object")}
-          return (
-            <div key={key} style={{ marginLeft: '20px' }}>
-              <strong>{formatKey(key)}:</strong>
-              <div style={{ marginLeft: '20px' }}>
-                {Object.entries(value).map(([nestedKey, nestedValue]) =>
-                  renderNestedContent(nestedKey, nestedValue)
-                )}
-              </div>
-            </div>
-          );
-        }
-
-        return null; // Fallback for unexpected content
-      };
-
-      // Main logic for rendering the array list section
-      return (
-        <div style={{ marginLeft: '20px' }}>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-            }}
-          >
-            {Object.entries(items).map(([key, value]) => renderNestedContent(key, value))}
-          </div>
+      >
+        <div className={styles.nestedContent}>
+          {Array.isArray(items)
+            ? items.map((item, index) => (
+                <div
+                  key={index}
+                  className={
+                    isMiniBoxSection ? styles.miniBox : styles.listItem
+                  }
+                >
+                  {typeof item === 'object'
+                    ? Object.entries(item).map(([nestedKey, nestedValue]) => (
+                        <div key={nestedKey}>
+                          <strong>{formatKey(nestedKey)}:</strong> {nestedValue}
+                        </div>
+                      ))
+                    : `• ${(item)}`}
+                </div>
+              ))
+            : Object.entries(items).map(([key, value]) => (
+                <div key={key} className={ styles.subTitle}>
+                  {/* Sub-titles for Skills */}
+                  <strong>{formatKey(key)} : </strong>{' '}<br />
+                  {typeof value === 'object'
+                    ? Object.entries(value).map(([nestedKey, nestedValue]) => (
+                        <div
+                          key={nestedKey}
+                          className={
+                            isMiniBoxSection ? styles.miniBox : styles.listItem
+                          }
+                        >
+                        {/* Nested values for Publications */}
+                          {renderTextWithLinks(nestedValue)}
+                        </div>
+                      ))
+                    : renderTextWithLinks(value)}
+                </div>
+              ))}
         </div>
-      );
+      </div>
+    );
   };
 
-  // LEVEL 2: Render items by index(education/experience entries)
+  // LEVEL 2: Render items by index >>>>>>>education/experience entries<<<<<<<<<
   const renderArrayItemsByIndex = (items) => {
-    console.log("Education and experience items are rendered by index")
+    console.log('Education and experience items are rendered by index');
     return (
       <div style={{ marginLeft: '20px' }}>
         {Object.entries(items)
@@ -427,13 +366,7 @@ const DataDisplay = ({ title, data }) => {
           .map(([_, item]) => (
             <div
               key={item.institution || item.company}
-              style={{
-                marginBottom: '20px',
-                padding: '15px',
-                backgroundColor: '#f5f5f5',
-                borderRadius: '8px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-              }}
+              className="backgroundBox" //<<<<<<Boxes for education and experience
             >
               {renderEducationExperienceItem(item)}
             </div>
@@ -444,27 +377,18 @@ const DataDisplay = ({ title, data }) => {
 
   // LEVEL 3: Render individual education/experience items
   const renderEducationExperienceItem = (item) => {
-    console.log("Using Education and Experience function")
+    console.log('Rendering Education and Experience function');
     return Object.entries(item).map(([key, value]) => {
-      // Special handling for responsibilities array
+      // Special handling for >>>>>responsibilities<<<<< array
       if (key === 'responsibilities' && Array.isArray(value)) {
         return (
-          <div key={key} style={{ marginTop: '10px' }}>
-            <strong style={{ 
-              textTransform: 'capitalize',
-              color: '#444',
-              display: 'block',
-              marginBottom: '5px'
-            }}>
-              {key.replace(/_/g, ' ')}:
-            </strong>
-            <ul style={{ 
-              marginTop: '5px',
-              marginLeft: '20px',
-              listStyleType: 'disc'
-            }}>
+          <div key={key} className={styles.subTitle}>
+            <strong>{key.replace(/_/g, ' ')}:</strong>
+            <ul className={styles.list}>
               {value.map((resp, i) => (
-                <li key={i} style={{ marginBottom: '3px' }}>{resp}</li>
+                <li key={i} className={styles.listItem}>
+                  {resp}
+                </li>
               ))}
             </ul>
           </div>
@@ -473,62 +397,22 @@ const DataDisplay = ({ title, data }) => {
 
       return (
         <div key={key} style={{ marginBottom: '8px' }}>
-          <strong style={{ 
-            textTransform: 'capitalize',
-            color: '#444'
-          }}>
-            {key.replace(/_/g, ' ')}:
-          </strong>{' '}
+          <strong className={styles.subTitle}>{key.replace(/_/g, ' ')}:</strong>{' '}
+          {/* Value is for Educations/Experience Not Responsabilities Nor Skills */}
           <span style={{ color: '#667' }}>{value}</span>
         </div>
       );
     });
   };
 
-  // Handle nested objects for other sections
-  const renderNestedObject = (obj) => {
-    console.log("Using nested objects function")
-    return (
-      <div style={{ marginLeft: '20px' }}>
-        {Object.entries(obj).map(([key, value]) => (
-          <div key={key} style={{ marginBottom: '15px' }}>
-            <h3 style={{ 
-              textTransform: 'capitalize',
-              color: '#444',
-              fontSize: '16px',
-              marginBottom: '8px'
-            }}>
-              {key.replace(/_/g, ' ')}
-            </h3>
-            {renderSectionsContent(key, value)}
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   return (
-    <div style={{ 
-      textAlign: 'left', 
-      padding: '20px',
-      maxWidth: '800px',
-      margin: '0 auto'
-    }}>
-      <h1 style={{
-        textTransform: 'capitalize',
-        color: '#333',
-        borderBottom: '2px solid #eee',
-        paddingBottom: '10px',
-        marginBottom: '20px'
-      }}>
-        {title}
-      </h1>
-
-      {/* Main content renderer */}
+    <div className={styles.dataDisplay}>
+      <h1 className={styles.title}>{title}</h1>
       {Object.entries(data).map(([key, content]) => (
-        (<div key={key}>
+        <div key={key}>
           {renderSectionsContent(key, content)}
-        </div>)
+          {console.log("renderedSectionsContent called")}          
+        </div>
       ))}
     </div>
   );

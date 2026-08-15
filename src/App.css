@@ -27,6 +27,11 @@
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
 
+.header-image {
+  width: 100px;
+  margin-bottom: -10px; /* Moves image slightly over the text */
+}
+
 .App-link {
   color: #61dafb;
 }
