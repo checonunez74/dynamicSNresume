@@ -11,7 +11,7 @@
 /* Top-right version */
 .fixed {
   position: fixed;
-  top: 5%;
+  top: 3%;
   right: 5%;
   z-index: 1000;
   background-color: #3b82f6;
