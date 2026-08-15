@@ -114,11 +114,6 @@ const DataDisplay = ({ title, data }) => {
     );
   };
 
-  // Helper function to check if section needs numbered list rendering
-  const traversingSectionsAndRendering = (sectionKey) => {
-    return ['skills', 'certifications', 'publications'].includes(sectionKey);
-  };
-
   // helper function to render text with links
   const renderTextWithLinks = (text) => {
     // Split text by spaces to check each word
