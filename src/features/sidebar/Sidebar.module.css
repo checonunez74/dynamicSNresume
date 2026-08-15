@@ -37,10 +37,13 @@
 
 /* 🔹 Hamburger Menu Button */
 .hamburger {
-  display: block;
+  display: flex;
+  align-items: center;
   position: fixed;
-  top: 5%;
-  left: 5%;
+  top: 0;
+  left: 24px;
+  height: 64px;
+  z-index: 20;
   background: none;
   border: none;
   font-size: 23px;

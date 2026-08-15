@@ -8,11 +8,8 @@
   transition: background-color 0.2s ease;
 }
 
-/* Top-right version */
+/* Top-right version — sits in the header flex row */
 .fixed {
-  position: fixed;
-  top: 3%;
-  right: 5%;
   z-index: 1000;
   background-color: #3b82f6;
   color: white;
@@ -37,4 +34,4 @@
 
 .sidebar:hover {
   background-color: rgba(255, 255, 255, 0.9);
-} 
+}

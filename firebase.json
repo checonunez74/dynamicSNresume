@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "sergion-icv",
     "public": "build",
     "ignore": [
       "firebase.json",
