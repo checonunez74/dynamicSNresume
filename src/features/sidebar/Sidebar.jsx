@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styles from './Sidebar.module.css'; // Ensure CSS module is correctly imported
-import ProfileImage from "../../assets/Lara.png"
+import styles from './Sidebar.module.css';
+import ProfileImage from '../../assets/Lara.png';
+import DownloadResumeButton from '../../components/DownloadResumeButton.jsx';
 
-const Sidebar = ({ data, onSelectSection }) => {
+const Sidebar = ({ 
+  data, onSelectSection }) => {
   const [isOpen, setIsOpen] = useState(false); // Controls sidebar open/close state
   const sidebarRef = useRef(null);
+  const [isFirstClick, setIsFirstClick] = useState(true);
 
   const handleClickOutside = (event) => {
     if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
@@ -24,7 +27,13 @@ const Sidebar = ({ data, onSelectSection }) => {
 return (
   <div>
     {/* 🔹 Hamburger Button */}
-    <button className={styles.hamburger} onClick={() => setIsOpen(!isOpen)}>
+    <button
+      className={`${styles.hamburger} ${!isFirstClick ? styles.hamburgerNoAnim : ''}`}
+      onClick={() => {
+        setIsOpen(!isOpen);
+        setIsFirstClick(false);
+      }}
+    >
       ☰ Open Menu
     </button>
 
@@ -36,6 +45,7 @@ return (
       <div className={styles.profileContainer}>
         <h2 className={styles.sidebarTitle}>Profile</h2>
         <img src={ProfileImage} alt="Profile" className={styles.profileImage} />
+        <DownloadResumeButton variant="sidebar" />
       </div>
 
       <ul>

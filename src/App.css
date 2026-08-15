@@ -15,16 +15,16 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 10vh;
+  min-height: 64px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: flex-end;
+  padding: 0 24px;
   position: sticky;
   top: 0;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  color: white;
 }
 
 .header-image {
