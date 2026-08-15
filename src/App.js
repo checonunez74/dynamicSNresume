@@ -21,8 +21,9 @@ function App() {
 
   return (
     <div className="App">
-      <DownloadResumeButton variant="fixed" />
-      <header className="App-header"></header>
+      <header className="App-header">
+        <DownloadResumeButton variant="fixed" />
+      </header>
       <main>
         <Box sx={{ display: 'flex' }}>
           <Sidebar data={sections} onSelectSection={setSelectedSection} />

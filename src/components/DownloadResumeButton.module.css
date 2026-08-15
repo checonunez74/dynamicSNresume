@@ -10,7 +10,7 @@
 
 /* Top-right version */
 .fixed {
-  position: fixed;
+  position: top/right;
   top: 3%;
   right: 5%;
   z-index: 1000;
