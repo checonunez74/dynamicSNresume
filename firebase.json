@@ -10,7 +10,7 @@
     ]
   },
   {
-    "site": "ezekiellara.web.app",
+    "site": "ezekiellara",
     "public": "build",
     "ignore": [
       "Firebase.json",
