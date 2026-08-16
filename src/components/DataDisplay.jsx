@@ -53,14 +53,15 @@ const DataDisplay = ({ title, data }) => {
       .replace(/_/g, ' ')
       .replace(/\b\w/g, (char) => char.toUpperCase());
 
-  const cardStyle = {
-    marginLeft: '20px',
-    marginBottom: '20px',
-    padding: '15px',
-    backgroundColor: '#f5f5f5',
-    borderRadius: '8px',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-    lineHeight: 1.6,
+  const renderSummaryWithBreak = (text) => {
+    const match = text.match(/^(.*?workflows\.)\s+(Known for[\s\S]*)$/);
+    const paragraphs = match ? [match[1], match[2]] : [text];
+
+    return paragraphs.map((paragraph) => (
+      <p key={paragraph.slice(0, 24)} className={styles.summaryParagraph}>
+        {paragraph}
+      </p>
+    ));
   };
 
   const renderContactInformation = (content) => {
@@ -76,7 +77,7 @@ const DataDisplay = ({ title, data }) => {
     }
 
     return (
-      <div style={cardStyle}>
+      <div className={`${styles.indented} ${styles.defaultBox}`}>
         {Object.entries(fields).map(([fieldKey, fieldValue]) => {
           if (typeof fieldValue === 'object' && fieldValue !== null) {
             return null;
@@ -85,14 +86,8 @@ const DataDisplay = ({ title, data }) => {
           const value = String(fieldValue ?? '');
 
           return (
-            <div key={fieldKey} style={{ marginBottom: '14px' }}>
-              <strong
-                style={{
-                  display: 'block',
-                  color: '#444',
-                  marginBottom: '4px',
-                }}
-              >
+            <div key={fieldKey} className={styles.contactField}>
+              <strong className={styles.contactLabel}>
                 {formatLabel(fieldKey)} :
               </strong>
               {isValidUrl(value) ? (
@@ -100,12 +95,12 @@ const DataDisplay = ({ title, data }) => {
                   href={toHref(value)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: '#2196f3', textDecoration: 'none' }}
+                  className={styles.link}
                 >
                   {value}
                 </a>
               ) : (
-                <span style={{ color: '#667' }}>{value}</span>
+                <span className={styles.muted}>{value}</span>
               )}
             </div>
           );
@@ -127,10 +122,7 @@ const DataDisplay = ({ title, data }) => {
               href={toHref(word)}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                color: '#2196f3',
-                textDecoration: 'none',
-              }}
+              className={styles.link}
             >
               {word}
             </a>
@@ -219,10 +211,12 @@ const DataDisplay = ({ title, data }) => {
 
     // Handle primitive values (e.g. Summary) — gray card
     return (
-      <div style={cardStyle}>
+      <div className={`${styles.indented} ${styles.defaultBox}`}>
         {typeof content === 'string' && isValidUrl(content)
           ? renderTextWithLinks(content)
-          : content}
+          : key === 'summary' && typeof content === 'string'
+            ? renderSummaryWithBreak(content)
+            : content}
       </div>
     );
   };
@@ -237,18 +231,6 @@ const DataDisplay = ({ title, data }) => {
 
       // Skills page: category labels + wrapping gray chips (no bullets)
       if (sectionKey === 'skills') {
-        const chipStyle = {
-          display: 'inline-block',
-          backgroundColor: '#f5f5f5',
-          padding: '8px 12px',
-          borderRadius: '6px',
-          fontSize: '14px',
-          color: '#555',
-          margin: '0 8px 8px 0',
-          boxShadow: '0 1px 2px rgba(0, 0, 0, 0.08)',
-          whiteSpace: 'nowrap',
-        };
-
         const getChipLabels = (value) => {
           if (Array.isArray(value)) {
             return value.map((item) =>
@@ -265,22 +247,15 @@ const DataDisplay = ({ title, data }) => {
         };
 
         return (
-          <div style={{ marginLeft: '20px' }}>
+          <div className={styles.indented}>
             {Object.entries(items || {}).map(([categoryKey, categoryValue]) => (
-              <div key={categoryKey} style={{ marginBottom: '24px' }}>
-                <strong
-                  style={{
-                    display: 'block',
-                    color: '#444',
-                    marginBottom: '10px',
-                    fontSize: '16px',
-                  }}
-                >
+              <div key={categoryKey} className={styles.chipCategory}>
+                <strong className={styles.chipCategoryLabel}>
                   {formatKey(categoryKey)} :
                 </strong>
-                <div>
+                <div className={styles.chipRow}>
                   {getChipLabels(categoryValue).map((label, index) => (
-                    <div key={`${categoryKey}-${index}`} style={chipStyle}>
+                    <div key={`${categoryKey}-${index}`} className={styles.chip}>
                       {label}
                     </div>
                   ))}
@@ -347,13 +322,13 @@ const DataDisplay = ({ title, data }) => {
   const renderArrayItemsByIndex = (items) => {
     console.log('Education and experience items are rendered by index');
     return (
-      <div style={{ marginLeft: '20px' }}>
+      <div className={styles.indented}>
         {Object.entries(items)
           .sort(([a], [b]) => Number(a) - Number(b))
           .map(([_, item]) => (
             <div
               key={item.institution || item.company}
-              className="backgroundBox" //<<<<<<Boxes for education and experience
+              className={styles.backgroundBox}
             >
               {renderEducationExperienceItem(item)}
             </div>
@@ -383,10 +358,10 @@ const DataDisplay = ({ title, data }) => {
       }
 
       return (
-        <div key={key} style={{ marginBottom: '8px' }}>
+        <div key={key} className={styles.fieldRow}>
           <strong className={styles.subTitle}>{key.replace(/_/g, ' ')}:</strong>{' '}
           {/* Value is for Educations/Experience Not Responsabilities Nor Skills */}
-          <span style={{ color: '#667' }}>{value}</span>
+          <span className={styles.muted}>{value}</span>
         </div>
       );
     });
