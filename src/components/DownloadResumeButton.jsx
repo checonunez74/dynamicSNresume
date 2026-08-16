@@ -1,7 +1,7 @@
 import styles from './DownloadResumeButton.module.css';
 
-const RESUME_PATH = `${process.env.PUBLIC_URL}/Ezekiel_Lara_OP.pdf`;
-const RESUME_FILENAME = `Ezekiel_Lara_OP.pdf`;
+const RESUME_PATH = `${process.env.PUBLIC_URL}/Ezekiel_Lara_Resume_Engineering_Lead.pdf`;
+const RESUME_FILENAME = `Ezekiel_Lara_Resume_Engineering_Lead.pdf`;
 
 const DownloadResumeButton = ({ variant = 'default' }) => {
     return (
