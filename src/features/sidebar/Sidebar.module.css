@@ -1,15 +1,26 @@
 /* 🔹 Sidebar Default (Hidden) */
 .sidebar {
-  width: 250px;
+  top: var(--header-height);
+  width: min(250px, 85vw);
   background-color: #3b82f6;
-  height: calc(100vh - 64px);
+  height: calc(100dvh - var(--header-height));
+  max-height: calc(100dvh - var(--header-height));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / old Edge */
   padding: 20px;
+  padding-bottom: 32px;
   position: fixed;
   left: 0;
-  top: 64px; /* sit below the header so the crest is not clipped */
   z-index: 15;
   transform: translateX(-100%); /* Initially hidden */
   transition: transform 0.3s ease-in-out;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
 }
 
 /* 🔹 Show Sidebar When Open */
@@ -26,7 +37,7 @@
 .sidebar li {
   padding: 15px;
   cursor: pointer;
-  font-size: 18px;
+  font: clamp(0.9rem, 2vw, 1.25rem);
   border-bottom: 1px solid #ddd;
   color: white;
   text-transform: capitalize;
@@ -43,7 +54,8 @@
   position: fixed;
   top: 0;
   left: 24px;
-  height: 64px;
+  height: var(--header-height);
+  left: 1rem;
   z-index: 20;
   background: none;
   border: none;

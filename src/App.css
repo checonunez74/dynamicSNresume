@@ -13,7 +13,11 @@
   }
 }
 
+:root { --header-height: clamp(48px, 8vh, 64px); }
+
 .App-header {
+  min-height: var(--header-height);
+  padding: 0 1rem;
   background-color: #282c34;
   min-height: 64px;
   display: flex;

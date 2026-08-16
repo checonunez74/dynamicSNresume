@@ -1,8 +1,8 @@
 /* Component-Specific Styles */
 .dataDisplay {
   text-align: left;
-  padding: 20px;
-  max-width: 800px;
+  padding: clamp(8px, 2vw, 20px);
+  max-width: min(800px, 100%);
   margin: 0 auto;
 }
 
@@ -11,27 +11,95 @@
   margin-bottom: 20px;
 }
 
-/* Each individual mini-box */
+/* Each individual mini-box for certifications section */
 .miniBox {
-  display: inline-block;
-  background-color:#f5f5f5; /* Light gray background */
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  background-color:#dbe6ef; /* Light gray background */
   padding: 10px;
   border-radius: 8px;
   margin: 10px 10px 10px 0;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   font-size: 14px;
-  white-space: nowrap;
 }
 
-/* Default box for other sections */
+/* Default box for all other sections */
 .defaultBox {
   line-height: 1.6;
   text-align: justify;
   margin-bottom: 20px;
   padding: 15px;
-  background-color: #f5f5f5;
+  background-color: #dbe6ef;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.indented {
+  margin-left: 20px;
+}
+
+.summaryParagraph {
+  margin: 0 0 0.75em;
+  text-indent: 2em;
+  text-align: justify;
+}
+
+.summaryParagraph:last-child {
+  margin-bottom: 0;
+}
+
+.backgroundBox {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #dbe6ef;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.contactField {
+  margin-bottom: 14px;
+}
+
+.contactLabel {
+  display: block;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.muted {
+  color: #667;
+}
+
+.fieldRow {
+  margin-bottom: 8px;
+}
+
+.chipCategory {
+  margin-bottom: 24px;
+}
+
+.chipCategoryLabel {
+  display: block;
+  color: #444;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-block;
+  background-color: #dbe6ef;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #555;
+  margin: 0 8px 8px 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
 /* Content area inside the container */
@@ -51,6 +119,7 @@
   border-bottom: 2px solid #eee;
   padding-bottom: 10px;
   margin-bottom: 20px;
+  font-size: 2.25rem;
 }
 
 .subTitle {
@@ -84,12 +153,82 @@
   text-decoration: underline;
 }
 
-/* Responsive Design: Media Queries */
-@media (max-width: 768px) {
-  .miniBox {
-    flex: 1 1 calc(100% - 10px); /* Full width for smaller screens */
+/* Zoomed / low-resolution screens (e.g. 1080p at 150%) */
+@media (max-height: 800px), (max-width: 1280px) {
+  .dataDisplay {
+    padding: clamp(6px, 1.5vw, 12px);
   }
 
+  .title {
+    font-size: 1.75rem;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+  }
+
+  .subTitle {
+    margin-top: 12px;
+    font-size: 1rem;
+  }
+
+  .defaultBox {
+    padding: 10px;
+    margin-bottom: 12px;
+  }
+
+  .miniBoxContainer {
+    margin-bottom: 12px;
+  }
+
+  .miniBox {
+    padding: 8px;
+    margin: 6px 6px 6px 0;
+    font-size: 13px;
+  }
+
+  .sectionContent {
+    margin-left: 12px;
+    margin-bottom: 6px;
+  }
+
+  .list {
+    margin-left: 12px;
+  }
+
+  .nestedContent {
+    margin-top: 6px;
+  }
+
+  .indented {
+    margin-left: 12px;
+  }
+
+  .backgroundBox {
+    padding: 10px;
+    margin-bottom: 12px;
+  }
+
+  .contactField {
+    margin-bottom: 8px;
+  }
+
+  .chipCategory {
+    margin-bottom: 14px;
+  }
+
+  .chipCategoryLabel {
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+  }
+
+  .chip {
+    padding: 6px 10px;
+    margin: 0 6px 6px 0;
+    font-size: 13px;
+  }
+}
+
+/* Responsive Design: Media Queries */
+@media (max-width: 768px) {
   .sectionContent {
     margin-left: 10px; /* Reduce margin for smaller screens */
   }
@@ -114,7 +253,7 @@
   }
 
   .title {
-    font-size: 18px; /* Slightly smaller title font size */
+    font-size: 1.5rem;
   }
 
   .subTitle {
