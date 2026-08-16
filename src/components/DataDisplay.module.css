@@ -16,7 +16,7 @@
   display: block;
   width: fit-content;
   max-width: 100%;
-  background-color:#dbe6ef; /* Light gray background */
+  background-color:#c5d8e8; /* Light gray background */
   padding: 10px;
   border-radius: 8px;
   margin: 10px 10px 10px 0;
@@ -30,7 +30,7 @@
   text-align: justify;
   margin-bottom: 20px;
   padding: 15px;
-  background-color: #dbe6ef;
+  background-color: #c5d8e8;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -52,7 +52,7 @@
 .backgroundBox {
   margin-bottom: 20px;
   padding: 15px;
-  background-color: #dbe6ef;
+  background-color: #c5d8e8;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -93,7 +93,7 @@
 
 .chip {
   display: inline-block;
-  background-color: #dbe6ef;
+  background-color: #c5d8e8;
   padding: 8px 12px;
   border-radius: 6px;
   font-size: 14px;
