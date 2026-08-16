@@ -1,5 +1,6 @@
 {
-  "hosting": {
+  "hosting": [
+    {
     "site": "sergion-icv",
     "public": "build",
     "ignore": [
@@ -7,5 +8,15 @@
       "**/.*",
       "**/node_modules/**"
     ]
+  },
+  {
+    "site": "ezekiellara.web.app",
+    "public": "build",
+    "ignore": [
+      "Firebase.json",
+      "**/.*", 
+      "**/node_modules/**"
+    ]
   }
+ ]
 }
