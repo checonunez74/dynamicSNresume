@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import ContactModal from './ContactModal';
 import styles from './Portfolio.module.css';
 import crest from '../../assets/Lara.png';
 
@@ -96,6 +97,7 @@ const BackToTopGraphic = () => {
 
 const Portfolio = () => {
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [showContact, setShowContact] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 280);
@@ -187,13 +189,13 @@ const Portfolio = () => {
               >
                 View experience <ArrowDownIcon />
               </a>
-              <a
+              <button
+                type="button"
                 className={styles.secondary}
-                href="#about"
-                onClick={(event) => scrollToSection(event, 'about')}
+                onClick={() => setShowContact(true)}
               >
                 Get in touch <ArrowUpRightIcon />
-              </a>
+              </button>
             </div>
           </div>
           <div className={styles.portrait}>
@@ -272,6 +274,7 @@ const Portfolio = () => {
           </div>
         </section>
       </main>
+      {showContact && <ContactModal onClose={() => setShowContact(false)} />}
       {showBackToTop && (
         <button
           type="button"
