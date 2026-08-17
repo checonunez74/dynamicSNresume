@@ -4,9 +4,11 @@ import DynamicDataComponent from './hooks/useFirebaseData.jsx';
 import DataDisplay from './components/DataDisplay.jsx';
 import Sidebar from './features/sidebar/Sidebar';
 import DownloadResumeButton from './components/DownloadResumeButton.jsx';
+import Portfolio from './features/portfolio/Portfolio.jsx';
 import './App.css';
 
 function App() {
+  const [mode, setMode] = useState('portfolio');
   const [selectedSection, setSelectedSection] = useState('summary');
 
   const sections = [
@@ -19,9 +21,20 @@ function App() {
     'publications',
   ];
 
+  if (mode === 'portfolio') {
+    return <Portfolio onOpenApp={() => setMode('app')} />;
+  }
+
   return (
     <div className="App">
       <header className="App-header">
+        <button
+          type="button"
+          className="portfolio-back"
+          onClick={() => setMode('portfolio')}
+        >
+          Back to portfolio
+        </button>
         <DownloadResumeButton variant="fixed" />
       </header>
       <main>
