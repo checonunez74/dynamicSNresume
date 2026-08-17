@@ -1,5 +1,8 @@
 .App {
+  --header-height: clamp(48px, 8vh, 64px);
   text-align: center;
+  min-height: 100vh;
+  background-color: #4c86af;
 }
 
 .App-logo {
@@ -12,8 +15,6 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-:root { --header-height: clamp(48px, 8vh, 64px); }
 
 .App-header {
   min-height: var(--header-height);
@@ -30,6 +31,25 @@
   z-index: 10;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
   color: white;
+}
+
+.portfolio-back {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+  margin-right: 12px;
+  text-decoration: none;
+}
+
+.portfolio-back:hover,
+.portfolio-back:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .header-image {

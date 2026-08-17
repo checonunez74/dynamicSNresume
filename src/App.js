@@ -1,44 +1,15 @@
-import { Box } from '@mui/material';
-import { useState } from 'react';
-import DynamicDataComponent from './hooks/useFirebaseData.jsx';
-import DataDisplay from './components/DataDisplay.jsx';
-import Sidebar from './features/sidebar/Sidebar';
-import DownloadResumeButton from './components/DownloadResumeButton.jsx';
-import './App.css';
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import Portfolio from './features/portfolio/Portfolio';
+import OnlineResume from './features/online-resume/OnlineResume';
 
 function App() {
-  const [selectedSection, setSelectedSection] = useState('summary');
-
-  const sections = [
-    'Contact_Information',
-    'summary',
-    'education',
-    'experience',
-    'skills',
-    'certifications',
-    'publications',
-  ];
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <DownloadResumeButton variant="fixed" />
-      </header>
-      <main>
-        <Box sx={{ display: 'flex' }}>
-          <Sidebar data={sections} onSelectSection={setSelectedSection} />
-
-          <Box role="tabpanel" sx={{ width: '100%', p: 3 }}>
-            <DynamicDataComponent
-              key={selectedSection}
-              path={selectedSection}
-              title={selectedSection.replace(/_/g, ' ')}
-              component={DataDisplay}
-            />
-          </Box>
-        </Box>
-      </main>
-    </div>
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<Portfolio />} />
+        <Route path="/resume" element={<OnlineResume />} />
+      </Routes>
+    </HashRouter>
   );
 }
 
