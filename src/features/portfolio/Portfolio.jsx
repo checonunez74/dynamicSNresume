@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Portfolio.module.css';
 import crest from '../../assets/Lara.png';
 
@@ -93,7 +94,7 @@ const BackToTopGraphic = () => {
   );
 };
 
-const Portfolio = ({ onOpenApp }) => {
+const Portfolio = () => {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
@@ -107,11 +108,20 @@ const Portfolio = ({ onOpenApp }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const scrollToSection = (event, id) => {
+    event.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className={styles.root}>
       <header className={styles.header}>
         <div className={`${styles.shell} ${styles.nav}`}>
-          <a className={styles.brand} href="#about">
+          <a
+            className={styles.brand}
+            href="#about"
+            onClick={(event) => scrollToSection(event, 'about')}
+          >
             <img
               className={styles.monogram}
               src={crest}
@@ -120,13 +130,25 @@ const Portfolio = ({ onOpenApp }) => {
             <span className={styles.brandName}>Ezekiel Lara</span>
           </a>
           <nav className={styles.links} aria-label="Primary navigation">
-            <a className={styles.navLink} href="#about">
+            <a
+              className={styles.navLink}
+              href="#about"
+              onClick={(event) => scrollToSection(event, 'about')}
+            >
               About
             </a>
-            <a className={styles.navLink} href="#experience">
+            <a
+              className={styles.navLink}
+              href="#experience"
+              onClick={(event) => scrollToSection(event, 'experience')}
+            >
               Experience
             </a>
-            <a className={styles.navLink} href="#expertise">
+            <a
+              className={styles.navLink}
+              href="#expertise"
+              onClick={(event) => scrollToSection(event, 'expertise')}
+            >
               Expertise
             </a>
             <a
@@ -136,13 +158,9 @@ const Portfolio = ({ onOpenApp }) => {
             >
               <DownloadIcon /> Résumé PDF
             </a>
-            <button
-              type="button"
-              className={styles.appButton}
-              onClick={onOpenApp}
-            >
+            <Link className={styles.appButton} to="/resume">
               <LayoutGridIcon /> Online Resume
-            </button>
+            </Link>
           </nav>
         </div>
       </header>
@@ -162,10 +180,18 @@ const Portfolio = ({ onOpenApp }) => {
               modernization.
             </p>
             <div className={styles.actions}>
-              <a className={styles.primary} href="#experience">
+              <a
+                className={styles.primary}
+                href="#experience"
+                onClick={(event) => scrollToSection(event, 'experience')}
+              >
                 View experience <ArrowDownIcon />
               </a>
-              <a className={styles.secondary} href="#about">
+              <a
+                className={styles.secondary}
+                href="#about"
+                onClick={(event) => scrollToSection(event, 'about')}
+              >
                 Get in touch <ArrowUpRightIcon />
               </a>
             </div>

@@ -1,0 +1,49 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Box } from '@mui/material';
+import DynamicDataComponent from '../../hooks/useFirebaseData.jsx';
+import DataDisplay from '../../components/DataDisplay.jsx';
+import Sidebar from '../sidebar/Sidebar';
+import DownloadResumeButton from '../../components/DownloadResumeButton.jsx';
+import './OnlineResume.css';
+
+function OnlineResume() {
+  const [selectedSection, setSelectedSection] = useState('summary');
+
+  const sections = [
+    'Contact_Information',
+    'summary',
+    'education',
+    'experience',
+    'skills',
+    'certifications',
+    'publications',
+  ];
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <Link className="portfolio-back" to="/">
+          Back to portfolio
+        </Link>
+        <DownloadResumeButton variant="fixed" />
+      </header>
+      <main>
+        <Box sx={{ display: 'flex' }}>
+          <Sidebar data={sections} onSelectSection={setSelectedSection} />
+
+          <Box role="tabpanel" sx={{ width: '100%', p: 3 }}>
+            <DynamicDataComponent
+              key={selectedSection}
+              path={selectedSection}
+              title={selectedSection.replace(/_/g, ' ')}
+              component={DataDisplay}
+            />
+          </Box>
+        </Box>
+      </main>
+    </div>
+  );
+}
+
+export default OnlineResume;

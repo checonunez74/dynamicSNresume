@@ -1,4 +1,5 @@
 .App {
+  --header-height: clamp(48px, 8vh, 64px);
   text-align: center;
   min-height: 100vh;
   background-color: #4c86af;
@@ -14,8 +15,6 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-:root { --header-height: clamp(48px, 8vh, 64px); }
 
 .App-header {
   min-height: var(--header-height);
@@ -35,6 +34,8 @@
 }
 
 .portfolio-back {
+  display: inline-flex;
+  align-items: center;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.4);
   color: white;
@@ -43,6 +44,7 @@
   cursor: pointer;
   font: inherit;
   margin-right: 12px;
+  text-decoration: none;
 }
 
 .portfolio-back:hover,
