@@ -1,10 +1,22 @@
 {
-  "hosting": {
+  "hosting": [
+    {
+    "site": "sergion-icv",
     "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ]
+  },
+  {
+    "site": "ezekiellara",
+    "public": "build",
+    "ignore": [
+      "Firebase.json",
+      "**/.*", 
+      "**/node_modules/**"
+    ]
   }
+ ]
 }

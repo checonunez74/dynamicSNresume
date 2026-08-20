@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styles from './Sidebar.module.css'; // Ensure CSS module is correctly imported
-import ProfileImage from "../../assets/Lara.png"
+import styles from './Sidebar.module.css';
+import ProfileImage from '../../assets/Lara.png';
+import DownloadResumeButton from '../../components/DownloadResumeButton.jsx';
 
 const Sidebar = ({ 
   data, onSelectSection }) => {
@@ -44,6 +45,7 @@ return (
       <div className={styles.profileContainer}>
         <h2 className={styles.sidebarTitle}>Profile</h2>
         <img src={ProfileImage} alt="Profile" className={styles.profileImage} />
+        <DownloadResumeButton variant="sidebar" />
       </div>
 
       <ul>

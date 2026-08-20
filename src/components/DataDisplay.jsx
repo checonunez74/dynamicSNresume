@@ -20,33 +20,117 @@ const DataDisplay = ({ title, data }) => {
 
   // Helper function to detect URLs in text
   const isValidUrl = (string) => {
+    if (typeof string !== 'string') return false;
     try {
       new URL(string);
       return true;
     } catch (_) {
-      return false;
+      // Allow bare domains like www.linkedin.com/...
+      try {
+        new URL(`https://${string}`);
+        return (
+          string.includes('.') &&
+          !string.includes(' ') &&
+          !string.includes('@')
+        );
+      } catch {
+        return false;
+      }
     }
+  };
+
+  const toHref = (string) => {
+    try {
+      new URL(string);
+      return string;
+    } catch (_) {
+      return `https://${string}`;
+    }
+  };
+
+  const formatLabel = (key) =>
+    key
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+
+  const renderSummaryWithBreak = (text) => {
+    const match = text.match(/^(.*?workflows\.)\s+(Known for[\s\S]*)$/);
+    const paragraphs = match ? [match[1], match[2]] : [text];
+
+    return paragraphs.map((paragraph) => (
+      <p key={paragraph.slice(0, 24)} className={styles.summaryParagraph}>
+        {paragraph}
+      </p>
+    ));
+  };
+
+  const renderContactInformation = (content) => {
+    let fields =
+      content && typeof content === 'object' && !Array.isArray(content)
+        ? { ...content }
+        : {};
+
+    // Flatten { name, contact: { email, phone, ... } } shapes
+    if (fields.contact && typeof fields.contact === 'object') {
+      const { contact, ...rest } = fields;
+      fields = { ...rest, ...contact };
+    }
+
+    return (
+      <div className={`${styles.indented} ${styles.defaultBox}`}>
+        {Object.entries(fields).map(([fieldKey, fieldValue]) => {
+          if (typeof fieldValue === 'object' && fieldValue !== null) {
+            return null;
+          }
+
+          const value = String(fieldValue ?? '');
+
+          return (
+            <div key={fieldKey} className={styles.contactField}>
+              <strong className={styles.contactLabel}>
+                {formatLabel(fieldKey)} :
+              </strong>
+              {isValidUrl(value) ? (
+                <a
+                  href={toHref(value)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.link}
+                >
+                  {value}
+                </a>
+              ) : (
+                <span className={styles.muted}>{value}</span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   // helper function to render text with links
   const renderTextWithLinks = (text) => {
     // Split text by spaces to check each word
     const words = text.split(' ');
-    return words.map((word, index) =>
-      isValidUrl(word) ? (
-        <a
-          key={index}
-          href={word}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.link}
-        >
-          {word}
-        </a>
-      ) : (
-        word + ' '
-      )
-    );
+
+    return words.map((word, index) => {
+      if (isValidUrl(word)) {
+        return (
+          <React.Fragment key={index}>
+            <a
+              href={toHref(word)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.link}
+            >
+              {word}
+            </a>
+          </React.Fragment>
+        );
+      }
+      return word + ' ';
+    });
   };
 
   // LEVEL 1: Rendering data form FB in each section's content
@@ -104,11 +188,35 @@ const DataDisplay = ({ title, data }) => {
         </div>
       );
     }
-    // Renders not nested objects and items –Summary
+    
+  // Contact Information — one gray card, stacked label/value (matches Summary card look)
+  if (
+    (key === 'Contact_Information' || key === 'contact' || key === 'consultant') &&
+    typeof content === 'object' &&
+    content !== null
+  ) {
+    return renderContactInformation(content);
+  }
+
+  // Handle objects (nested key-value pairs)
+  if (typeof content === 'object' && content !== null) {
+    console.log("Using the handle objects function")
     return (
       <div className={styles.sectionContent}>
         {/* <strong>{key.replace(/_/g, ' ')}:</strong> */}
         <div className={styles.defaultBox}>{content}</div>
+      </div>
+    );
+  }
+
+    // Handle primitive values (e.g. Summary) — gray card
+    return (
+      <div className={`${styles.indented} ${styles.defaultBox}`}>
+        {typeof content === 'string' && isValidUrl(content)
+          ? renderTextWithLinks(content)
+          : key === 'summary' && typeof content === 'string'
+            ? renderSummaryWithBreak(content)
+            : content}
       </div>
     );
   };
@@ -121,6 +229,44 @@ const DataDisplay = ({ title, data }) => {
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
 
+      // Skills page: category labels + wrapping gray chips (no bullets)
+      if (sectionKey === 'skills') {
+        const getChipLabels = (value) => {
+          if (Array.isArray(value)) {
+            return value.map((item) =>
+              typeof item === 'object' && item !== null
+                ? Object.values(item).join(' ')
+                : String(item)
+            );
+          }
+          if (typeof value === 'object' && value !== null) {
+            // e.g. { Temenos: 5, JavaScript: 4 } → chip per key
+            return Object.keys(value);
+          }
+          return [String(value)];
+        };
+
+        return (
+          <div className={styles.indented}>
+            {Object.entries(items || {}).map(([categoryKey, categoryValue]) => (
+              <div key={categoryKey} className={styles.chipCategory}>
+                <strong className={styles.chipCategoryLabel}>
+                  {formatKey(categoryKey)} :
+                </strong>
+                <div className={styles.chipRow}>
+                  {getChipLabels(categoryValue).map((label, index) => (
+                    <div key={`${categoryKey}-${index}`} className={styles.chip}>
+                      {label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      }
+
+      
     const isMiniBoxSection =
       sectionKey === 'skills' || sectionKey === 'certifications';
 
@@ -176,13 +322,13 @@ const DataDisplay = ({ title, data }) => {
   const renderArrayItemsByIndex = (items) => {
     console.log('Education and experience items are rendered by index');
     return (
-      <div style={{ marginLeft: '20px' }}>
+      <div className={styles.indented}>
         {Object.entries(items)
           .sort(([a], [b]) => Number(a) - Number(b))
           .map(([_, item]) => (
             <div
               key={item.institution || item.company}
-              className="backgroundBox" //<<<<<<Boxes for education and experience
+              className={styles.backgroundBox}
             >
               {renderEducationExperienceItem(item)}
             </div>
@@ -212,10 +358,10 @@ const DataDisplay = ({ title, data }) => {
       }
 
       return (
-        <div key={key} style={{ marginBottom: '8px' }}>
+        <div key={key} className={styles.fieldRow}>
           <strong className={styles.subTitle}>{key.replace(/_/g, ' ')}:</strong>{' '}
           {/* Value is for Educations/Experience Not Responsabilities Nor Skills */}
-          <span style={{ color: '#667' }}>{value}</span>
+          <span className={styles.muted}>{value}</span>
         </div>
       );
     });
