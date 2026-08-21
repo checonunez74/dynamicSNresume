@@ -3,9 +3,13 @@ import { Link } from 'react-router-dom';
 import ContactModal from './ContactModal';
 import styles from './Portfolio.module.css';
 import crest from '../../assets/Lara.png';
-
-const RESUME_PATH = `${process.env.PUBLIC_URL}/Ezekiel_Lara_Resume_Engineering_Lead.pdf`;
-const RESUME_FILENAME = 'Ezekiel_Lara_Resume_Engineering_Lead.pdf';
+import {
+  CAREER_TRACKS,
+  getResumeForTrack,
+  getTrackById,
+  resumeHref,
+} from '../../data/careerTracks';
+import { EXPERIENCE, PROFILE, PROOF_POINTS } from '../../data/profile';
 
 const Icon = ({ children }) => (
   <svg
@@ -31,26 +35,10 @@ const DownloadIcon = () => (
   </Icon>
 );
 
-const LayoutGridIcon = () => (
-  <Icon>
-    <rect width="7" height="7" x="3" y="3" rx="1" />
-    <rect width="7" height="7" x="14" y="3" rx="1" />
-    <rect width="7" height="7" x="14" y="14" rx="1" />
-    <rect width="7" height="7" x="3" y="14" rx="1" />
-  </Icon>
-);
-
 const ArrowDownIcon = () => (
   <Icon>
     <path d="M12 5v14" />
     <path d="m19 12-7 7-7-7" />
-  </Icon>
-);
-
-const ArrowUpRightIcon = () => (
-  <Icon>
-    <path d="M7 7h10v10" />
-    <path d="M7 17 17 7" />
   </Icon>
 );
 
@@ -95,9 +83,17 @@ const BackToTopGraphic = () => {
   );
 };
 
-const Portfolio = () => {
+const Portfolio = ({ trackId }) => {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showContact, setShowContact] = useState(false);
+  const activeResume = getResumeForTrack(trackId);
+  const activeTrack = getTrackById(trackId);
+  const seeking = activeTrack?.seeking ?? PROFILE.seeking;
+  const roleLine = activeTrack?.targetRole ?? PROFILE.roleLine;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [trackId]);
 
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 280);
@@ -115,53 +111,48 @@ const Portfolio = () => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleBrandClick = (event) => {
+    if (!trackId) {
+      scrollToSection(event, 'about');
+    }
+  };
+
   return (
     <div className={styles.root}>
       <header className={styles.header}>
         <div className={`${styles.shell} ${styles.nav}`}>
-          <a
-            className={styles.brand}
-            href="#about"
-            onClick={(event) => scrollToSection(event, 'about')}
-          >
+          <Link className={styles.brand} to="/" onClick={handleBrandClick}>
             <img
               className={styles.monogram}
               src={crest}
               alt=""
             />
-            <span className={styles.brandName}>Ezekiel Lara</span>
-          </a>
+            <span className={styles.brandName}>{PROFILE.name}</span>
+          </Link>
           <nav className={styles.links} aria-label="Primary navigation">
             <a
-              className={styles.navLink}
-              href="#about"
-              onClick={(event) => scrollToSection(event, 'about')}
+              className={`${styles.navLink} ${styles.headerEmail}`}
+              href={`mailto:${PROFILE.email}`}
             >
-              About
+              {PROFILE.email}
             </a>
             <a
               className={styles.navLink}
-              href="#experience"
-              onClick={(event) => scrollToSection(event, 'experience')}
+              href={PROFILE.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Experience
-            </a>
-            <a
-              className={styles.navLink}
-              href="#expertise"
-              onClick={(event) => scrollToSection(event, 'expertise')}
-            >
-              Expertise
+              {PROFILE.linkedinLabel}
             </a>
             <a
               className={styles.resume}
-              href={RESUME_PATH}
-              download={RESUME_FILENAME}
+              href={resumeHref(activeResume.filename)}
+              download={activeResume.filename}
             >
               <DownloadIcon /> Résumé PDF
             </a>
-            <Link className={styles.appButton} to="/resume">
-              <LayoutGridIcon /> Online Resume
+            <Link className={styles.quietLink} to="/resume">
+              Online résumé
             </Link>
           </nav>
         </div>
@@ -169,32 +160,50 @@ const Portfolio = () => {
       <main>
         <section className={`${styles.shell} ${styles.hero}`} id="about">
           <div>
-            <div className={styles.kicker}>
-              ENGINEERING LEADER · DIGITAL BANKING
+            <p className={styles.kicker}>{seeking}</p>
+            <h1 className={styles.title}>{PROFILE.name}</h1>
+            <p className={styles.roleLine}>{roleLine}</p>
+            <p className={styles.lead}>{PROFILE.lead}</p>
+            <dl className={styles.proof}>
+              {PROOF_POINTS.map((point) => (
+                <div key={point.value} className={styles.proofItem}>
+                  <dt>{point.value}</dt>
+                  <dd>{point.label}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className={styles.contactRow}>
+              <a href={`mailto:${PROFILE.email}`}>{PROFILE.email}</a>
+              <a
+                href={PROFILE.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {PROFILE.linkedinLabel}
+              </a>
+              <a href={PROFILE.phoneHref}>{PROFILE.phone}</a>
             </div>
-            <h1 className={styles.title}>
-              I build reliable financial technology—and the teams behind it.
-            </h1>
-            <p className={styles.lead}>
-              Engineering leader with 20+ years delivering enterprise web,
-              mobile, and secure banking experiences. Deep expertise in Temenos
-              Journey, frontend architecture, accessibility, and application
-              modernization.
-            </p>
             <div className={styles.actions}>
               <a
                 className={styles.primary}
+                href={resumeHref(activeResume.filename)}
+                download={activeResume.filename}
+              >
+                Download Résumé <DownloadIcon />
+              </a>
+              <a
+                className={styles.secondary}
                 href="#experience"
                 onClick={(event) => scrollToSection(event, 'experience')}
               >
-                View experience <ArrowDownIcon />
+                View Leadership Experience <ArrowDownIcon />
               </a>
               <button
                 type="button"
                 className={styles.secondary}
                 onClick={() => setShowContact(true)}
               >
-                Get in touch <ArrowUpRightIcon />
+                Send a message
               </button>
             </div>
           </div>
@@ -206,71 +215,97 @@ const Portfolio = () => {
             />
           </div>
         </section>
-        <section className={styles.strip} id="expertise">
-          <div className={`${styles.shell} ${styles.highlights}`}>
-            <div className={styles.highlight}>
-              <strong>20+ years</strong>
-              <span>Enterprise engineering</span>
-            </div>
-            <div className={styles.highlight}>
-              <strong>Temenos Journey</strong>
-              <span>Maestro & Manager</span>
-            </div>
-            <div className={styles.highlight}>
-              <strong>WCAG / ADA</strong>
-              <span>Accessible by design</span>
-            </div>
-            <div className={styles.highlight}>
-              <strong>Hands-on leader</strong>
-              <span>Architecture to mentoring</span>
-            </div>
+        <section className={`${styles.shell} ${styles.expertise}`} id="expertise">
+          <div className={styles.expertiseIntro}>
+            <div className={styles.kicker}>SUPPORTING DEPTH</div>
+            <h2 className={styles.heading}>
+              Same leadership identity. Targeted proof when a role needs it.
+            </h2>
+            <p className={styles.sectionIntro}>
+              The homepage résumé is the Engineering Lead version. Use a
+              track page or its PDF only when an application is specifically
+              mobile, leadership, or Temenos.
+            </p>
+          </div>
+          <div className={styles.expertiseGrid}>
+            {CAREER_TRACKS.map((track) => {
+              const isActive = track.id === trackId;
+
+              return (
+                <article
+                  key={track.id}
+                  className={`${styles.expertiseCard} ${
+                    isActive
+                      ? styles.expertiseCardActive
+                      : trackId
+                        ? styles.expertiseCardInactive
+                        : ''
+                  }`}
+                >
+                  <p className={styles.expertiseTrack}>{track.careerTrack}</p>
+                  <h3 className={styles.expertiseTitle}>
+                    {track.websiteLabel}
+                  </h3>
+                  <p className={styles.expertiseSummary}>{track.summary}</p>
+                  <div className={styles.expertiseActions}>
+                    {track.proof && (
+                      <a
+                        className={styles.proofLink}
+                        href={track.proof.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <strong>{track.proof.label}</strong>
+                      </a>
+                    )}
+                    {!isActive && (
+                      <Link className={styles.cardLink} to={track.path}>
+                        View {track.websiteLabel}
+                      </Link>
+                    )}
+                    <a
+                      className={styles.cardDownload}
+                      href={resumeHref(track.resume.filename)}
+                      download={track.resume.filename}
+                    >
+                      {track.resume.buttonLabel}
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
         <section className={`${styles.shell} ${styles.content}`} id="experience">
           <div>
-            <div className={styles.kicker}>SELECTED WORK</div>
+            <div className={styles.kicker}>LEADERSHIP EXPERIENCE</div>
             <h2 className={styles.heading}>
-              Experience that turns complexity into outcomes.
+              Teams, platforms, and measurable delivery.
             </h2>
             <p className={styles.sectionIntro}>
-              A concise, impact-focused view of leadership, architecture, and
-              delivery.
+              Named employers, dates, and outcomes from recent mobile,
+              banking, and Temenos work.
             </p>
           </div>
           <div className={styles.experience}>
-            <article className={styles.role}>
-              <div className={styles.roleTop}>
-                <strong>Engineering Leadership · Digital Banking</strong>
-                <span className={styles.date}>Recent</span>
-              </div>
-              <p>
-                Guided complex platform initiatives, resolved high-impact
-                production issues, and strengthened engineering standards across
-                product, QA, accessibility, and technology teams.
-              </p>
-              <div className={styles.tags}>
-                <span className={styles.tag}>Technical leadership</span>
-                <span className={styles.tag}>Platform stability</span>
-                <span className={styles.tag}>Cross-functional delivery</span>
-              </div>
-            </article>
-            <article className={styles.role}>
-              <div className={styles.roleTop}>
-                <strong>Staff Engineering · Frontend Architecture</strong>
-                <span className={styles.date}>20+ years</span>
-              </div>
-              <p>
-                Designed and modernized enterprise web and mobile applications
-                using JavaScript, TypeScript, React, Java, REST APIs, and secure
-                integration patterns.
-              </p>
-              <div className={styles.tags}>
-                <span className={styles.tag}>React</span>
-                <span className={styles.tag}>TypeScript</span>
-                <span className={styles.tag}>REST APIs</span>
-                <span className={styles.tag}>Accessibility</span>
-              </div>
-            </article>
+            {EXPERIENCE.map((role) => (
+              <article key={`${role.company}-${role.dates}`} className={styles.role}>
+                <div className={styles.roleTop}>
+                  <strong>
+                    {role.title} · {role.company}
+                  </strong>
+                  <span className={styles.date}>{role.dates}</span>
+                </div>
+                <p>{role.summary}</p>
+                <div className={styles.tags}>
+                  {role.tags.map((tag) => (
+                    <span key={tag} className={styles.tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))}
           </div>
         </section>
       </main>

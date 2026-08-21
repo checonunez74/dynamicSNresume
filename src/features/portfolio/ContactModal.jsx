@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import styles from './Portfolio.module.css';
+import { PROFILE } from '../../data/profile';
 
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
@@ -68,15 +69,33 @@ const ContactModal = ({ onClose }) => {
         onClick={(event) => event.stopPropagation()}
       >
         <h2 id="contact-title" className={styles.modalTitle}>
-          Get in touch
+          Contact Ezekiel
         </h2>
-        <p className={styles.modalIntro}>
-          Send a message and it will be delivered to {TO_EMAIL}.
-        </p>
+        <ul className={styles.modalContacts}>
+          <li>
+            <span>Email</span>
+            <a href={`mailto:${PROFILE.email}`}>{PROFILE.email}</a>
+          </li>
+          <li>
+            <span>LinkedIn</span>
+            <a
+              href={PROFILE.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {PROFILE.linkedinLabel}
+            </a>
+          </li>
+          <li>
+            <span>Phone</span>
+            <a href={PROFILE.phoneHref}>{PROFILE.phone}</a>
+          </li>
+        </ul>
         {status === 'sent' ? (
           <p className={styles.modalSuccess}>Thanks. Your message was sent.</p>
         ) : (
           <form className={styles.modalForm} onSubmit={handleSubmit}>
+            <p className={styles.modalFormTitle}>Send a message</p>
             <label className={styles.modalLabel} htmlFor="contact-name">
               Name
               <input

@@ -1,19 +1,20 @@
 import styles from './DownloadResumeButton.module.css';
+import { DEFAULT_RESUME, resumeHref } from '../data/careerTracks';
 
-const RESUME_PATH = `${process.env.PUBLIC_URL}/Ezekiel_Lara_Resume_Engineering_Lead.pdf`;
-const RESUME_FILENAME = `Ezekiel_Lara_Resume_Engineering_Lead.pdf`;
-
-const DownloadResumeButton = ({ variant = 'default' }) => {
-    return (
-        <a 
-          href={RESUME_PATH} 
-          download={RESUME_FILENAME} 
-          className={`${styles.button} ${styles[variant]}`}
-          
-        >
-            Download Resume (PDF)
-        </a>
-    );
+const DownloadResumeButton = ({
+  variant = 'default',
+  filename = DEFAULT_RESUME.filename,
+  children = 'Download Resume (PDF)',
+}) => {
+  return (
+    <a
+      href={resumeHref(filename)}
+      download={filename}
+      className={`${styles.button} ${styles[variant]}`}
+    >
+      {children}
+    </a>
+  );
 };
 
 export default DownloadResumeButton;

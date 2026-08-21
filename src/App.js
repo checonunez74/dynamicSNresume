@@ -7,6 +7,18 @@ function App() {
     <HashRouter>
       <Routes>
         <Route path="/" element={<Portfolio />} />
+        <Route
+          path="/mobile-engineering"
+          element={<Portfolio trackId="mobile-engineering" />}
+        />
+        <Route
+          path="/engineering-leadership"
+          element={<Portfolio trackId="engineering-leadership" />}
+        />
+        <Route
+          path="/temenos"
+          element={<Portfolio trackId="temenos" />}
+        />
         <Route path="/resume" element={<OnlineResume />} />
       </Routes>
     </HashRouter>
