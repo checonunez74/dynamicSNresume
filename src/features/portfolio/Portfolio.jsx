@@ -207,12 +207,27 @@ const Portfolio = ({ trackId }) => {
               </button>
             </div>
           </div>
+          <div className={styles.portraitColumn}>
           <div className={styles.portrait}>
             <img
               className={styles.portraitImage}
               src={`${process.env.PUBLIC_URL}/EzekMugPic.jpg`}
               alt="Ezekiel Lara"
             />
+          </div>
+            <aside className={styles.buildCard}>
+              <p className={styles.buildardKicker}>How this site works</p>
+              <p className={styles.buildCardText}>
+                Click below for a technical walkthrough of how this web app was build and how it is maintained.
+              </p>
+              <a 
+                className={styles.primary} 
+                href="#how-it-works"
+                onClick={(event) => scrollToSection(event, 'how-it-works')}
+              >
+                How this app was built
+              </a>
+            </aside>
           </div>
         </section>
         <section className={`${styles.shell} ${styles.expertise}`} id="expertise">
@@ -306,6 +321,71 @@ const Portfolio = ({ trackId }) => {
                 </div>
               </article>
             ))}
+          </div>
+        </section>
+        <section className={`${styles.shell} ${styles.howBuilt}`} id="how-it-works">
+          <div className={styles.expertiseIntro}>
+            <div className={styles.kicker}>HOW THIS APP WAS BUILT</div>
+            <h2 className={styles.heading}>
+              One codebase, two public sites, a reviewable path to production.
+            </h2>
+            <p className={styles.sectionIntro}>
+              This is a single React app, not three websites. The homepage is the
+              public portfolio. The original résumé still runs as its own view.
+              Career-track pages reuse the same layout so a hiring audience sees
+              the right proof without a separate product to maintain.
+            </p>
+          </div>
+          <div className={styles.howBuiltGrid}>
+            <article className={styles.role}>
+              <strong>Isolated UI</strong>
+              <p>
+                The portfolio and the online résumé share one app, not one style
+                sheet. A landing-page change cannot leak into the résumé view,
+                which is the isolation you want when two products ship from the
+                same repository.
+              </p>
+            </article>
+            <article className={styles.role}>
+              <strong>One static build</strong>
+              <p>
+                Routing lives in the client so hosting can stay a static artifact.
+                One build serves the portfolio, the résumé, and the career-track
+                pages on both public domains—no server routing to operate.
+              </p>
+            </article>
+            <article className={styles.role}>
+              <strong>Live data, two hosts</strong>
+              <p>
+                The online résumé reads from Firebase Realtime Database, so content
+                can change without a code deploy. The same production build is
+                published to both public sites.
+              </p>
+            </article>
+            <article className={styles.role}>
+              <strong>Contact without a backend</strong>
+              <p>
+                The contact form sends from the browser. There is no mail server,
+                inbox credential, or extra service to patch—lower operational load
+                for a brochure-and-contact surface.
+              </p>
+            </article>
+            <article className={styles.role}>
+              <strong>GitHub as system of record</strong>
+              <p>
+                Source of truth is GitHub. Work is isolated on branches and reaches
+                main only through pull requests, so production changes are reviewed
+                and the history stays auditable.
+              </p>
+            </article>
+            <article className={styles.role}>
+              <strong>CI/CD with preview</strong>
+              <p>
+                Every pull request is built in GitHub Actions and deployed to a
+                Firebase preview, so a running site can be reviewed before merge.
+                Production is that same build, published to both live hosts.
+              </p>
+            </article>
           </div>
         </section>
       </main>
