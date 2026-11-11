@@ -215,13 +215,53 @@
   color: inherit;
 }
 
+.portraitColumn {
+  display: grid;
+  gap: 16px;
+  justify-self: end;
+  justify-items: center;
+  width: min(100%, clamp(140px, 22vw, 280px));
+}
+
+.portrait {
+  justify-self: stretch;
+  width: 100%;
+}
+
+.buildCard {
+  padding: 16px;
+  background: light-dark(#fff, #151e2b);
+  border: 1px solid light-dark(#e2e8f0, #2a3648);
+  border-radius: 14px;
+  text-align: left;
+}
+
+.buildCardKicker {
+  margin: 0 0 8px;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: light-dark(#2563eb, #8eb0ff);
+}
+
+.buildCardText {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  color: light-dark(#526076, #b4c0d0);
+}
+
+.buildCard .primary {
+  width: 100%;
+  justify-self: center;
+}
+
 .portrait {
   position: relative;
   width: min(100%, clamp(140px, 22vw, 280px));
   aspect-ratio: 1;
-  justify-self: end;
+  justify-self: center;
   border-radius: clamp(16px, 3vw, 28px);
-  overflow: hidden;
+  overflow: visible;
   display: grid;
   place-items: center;
   background: linear-gradient(
@@ -229,7 +269,9 @@
     light-dark(#dbeafe, #213b66),
     light-dark(#bfdbfe, #162741)
   );
-  box-shadow: 0 22px 55px light-dark(rgba(37, 99, 235, 0.14), rgba(0, 0, 0, 0.28));
+  box-shadow: 
+      0 0 24px 8px light-dark(rgba(37, 99, 235, 0.45), rgba(110, 156, 255, 0.2)),
+      0 22px 55px light-dark(rgba(37, 99, 235, 0.14), rgba(0, 0, 0, 0.28));
 }
 
 .portrait::after {
@@ -422,6 +464,17 @@
   color: light-dark(#1d4ed8, #a8c3ff);
 }
 
+.howBuilt {
+  padding: 48px 0 76px;
+  scroll-margin-top: 84px;
+}
+
+.howBuiltGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
 .backToTop {
   position: fixed;
   left: 50%;
@@ -502,7 +555,7 @@
 
   .portrait {
     width: min(100%, clamp(120px, 38vw, 220px));
-    justify-self: start;
+    justify-self: center;
     grid-row: 1;
   }
 
