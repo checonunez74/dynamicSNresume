@@ -394,6 +394,11 @@ const Portfolio = ({ trackId }) => {
                 which is the isolation you want when two products ship from the
                 same repository.
               </p>
+              <img
+                className={styles.howBuiltArt}
+                src={`${process.env.PUBLIC_URL}/browser-windows-2.png`}
+                alt=""
+              />
             </article>
             <article className={styles.role}>
               <span className={styles.howBuiltIcon} aria-hidden="true">
@@ -405,6 +410,11 @@ const Portfolio = ({ trackId }) => {
                 One build serves the portfolio, the résumé, and the career-track
                 pages on both public domains—no server routing to operate.
               </p>
+              <img
+                className={styles.howBuiltArt}
+                src={`${process.env.PUBLIC_URL}/software-cube-pages-6.png`}
+                alt=""
+              />
             </article>
             <article className={styles.role}>
               <span className={styles.howBuiltIcon} aria-hidden="true">
@@ -432,6 +442,11 @@ const Portfolio = ({ trackId }) => {
                 </a>
                 .
               </p>
+              <img
+                className={styles.howBuiltArt}
+                src={`${process.env.PUBLIC_URL}/Database-windows-4.png`}
+                alt=""
+              />
             </article>
             <article className={styles.role}>
               <span className={styles.howBuiltIcon} aria-hidden="true">
@@ -450,6 +465,11 @@ const Portfolio = ({ trackId }) => {
               >
                 Send email
               </button>
+              <img
+                className={styles.howBuiltArt}
+                src={`${process.env.PUBLIC_URL}/Contact%20Form-1.png`}
+                alt=""
+              />
             </article>
             <article className={styles.role}>
               <span className={styles.howBuiltIcon} aria-hidden="true">
@@ -469,6 +489,11 @@ const Portfolio = ({ trackId }) => {
                 reaches main through pull requests, so the history stays reviewable. Merge
                 does not publish production; release is a separate, explicit step.
               </p>
+              <img
+                className={styles.howBuiltArt}
+                src={`${process.env.PUBLIC_URL}/GitHub-cards-5.png`}
+                alt=""
+              />
             </article>
             <article className={styles.role}>
               <span className={styles.howBuiltIcon} aria-hidden="true">
@@ -483,6 +508,11 @@ const Portfolio = ({ trackId }) => {
                 pipeline. GitHub Actions still builds pull-request previews so a running
                 site can be reviewed before merge—CI for confidence, CD by choice.
               </p>
+              <img
+                className={styles.howBuiltArt}
+                src={`${process.env.PUBLIC_URL}/Manual-terminal-3.png`}
+                alt=""
+              />
             </article>
           </div>
         </section>
