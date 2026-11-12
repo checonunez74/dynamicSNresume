@@ -262,7 +262,7 @@ const Portfolio = ({ trackId }) => {
             />
           </div>
             <aside className={styles.buildCard}>
-              <p className={styles.buildardKicker}>How this site works</p>
+              <p className={styles.buildardKicker}>Technical walkthrough</p>
               <p className={styles.buildCardText}>
                 Click below for a technical walkthrough of how this web app was build and how it is maintained.
               </p>
@@ -414,7 +414,23 @@ const Portfolio = ({ trackId }) => {
               <p>
                 The online résumé reads from Firebase Realtime Database, so content
                 can change without a code deploy. The same production build is
-                published to both public sites.
+                published to{' '}
+                <a
+                  href="https://ezekiellara.web.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ezekiellara.web.app
+                </a>
+                {' '}and{' '}
+                <a
+                  href="https://sergion-icv.web.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  sergion-icv.web.app
+                </a>
+                .
               </p>
             </article>
             <article className={styles.role}>
@@ -427,6 +443,13 @@ const Portfolio = ({ trackId }) => {
                 inbox credential, or extra service to patch—lower operational load
                 for a brochure-and-contact surface.
               </p>
+              <button
+                type="button"
+                className={`${styles.primary} ${styles.howBuiltDemo}`}
+                onClick={() => setShowContact(true)}
+              >
+                Send email
+              </button>
             </article>
             <article className={styles.role}>
               <span className={styles.howBuiltIcon} aria-hidden="true">
@@ -434,7 +457,15 @@ const Portfolio = ({ trackId }) => {
               </span>
               <strong>GitHub as system of record</strong>
               <p>
-                GitHub is the system of record. Feature work is isolated on branches and
+                GitHub is the system of record at{' '}
+                <a
+                  href="https://github.com/checonunez74/dynamicSNresume"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  github.com/checonunez74/dynamicSNresume
+                </a>
+                . Feature work is isolated on branches and
                 reaches main through pull requests, so the history stays reviewable. Merge
                 does not publish production; release is a separate, explicit step.
               </p>

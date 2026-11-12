@@ -498,6 +498,24 @@
   height: 22px;
 }
 
+.howBuiltGrid .role a {
+  color: light-dark(#2563eb, #8eb0ff);
+  font-weight: 600;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.howBuiltGrid .role a:hover,
+.howBuiltGrid .role a:focus-visible {
+  text-decoration: underline;
+}
+
+.howBuiltDemo {
+  flex: none;
+  width: auto;
+  margin-top: 16px;
+}
+
 .backToTop {
   position: fixed;
   left: 50%;
