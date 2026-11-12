@@ -42,6 +42,52 @@ const ArrowDownIcon = () => (
   </Icon>
 );
 
+const LayersIcon = () => (
+  <Icon>
+    <rect x="3" y="3" width="7" height="18" rx="1" />
+    <rect x="14" y="3" width="7" height="18" rx="1" />
+  </Icon>
+);
+
+const PackageIcon = () => (
+  <Icon>
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+    <polyline points="3.29 7 12 12 20.71 7" />
+    <line x1="12" x2="12" y1="22" y2="12" />
+  </Icon>
+);
+
+const DatabaseIcon = () => (
+  <Icon>
+    <ellipse cx="12" cy="5" rx="9" ry="3" />
+    <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+    <path d="M3 12A9 3 0 0 0 21 12" />
+  </Icon>
+);
+
+const MailIcon = () => (
+  <Icon>
+    <rect width="20" height="16" x="2" y="4" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </Icon>
+);
+
+const GitBranchIcon = () => (
+  <Icon>
+    <line x1="6" x2="6" y1="3" y2="15" />
+    <circle cx="18" cy="6" r="3" />
+    <circle cx="6" cy="18" r="3" />
+    <path d="M18 9a9 9 0 0 1-9 9" />
+  </Icon>
+);
+
+const TerminalIcon = () => (
+  <Icon>
+    <polyline points="4 17 10 11 4 5" />
+    <line x1="12" x2="20" y1="19" y2="19" />
+  </Icon>
+);
+
 const BackToTopGraphic = () => {
   const motionRef = useRef(null);
 
@@ -216,7 +262,7 @@ const Portfolio = ({ trackId }) => {
             />
           </div>
             <aside className={styles.buildCard}>
-              <p className={styles.buildardKicker}>How this site works</p>
+              <p className={styles.buildardKicker}>Technical walkthrough</p>
               <p className={styles.buildCardText}>
                 Click below for a technical walkthrough of how this web app was build and how it is maintained.
               </p>
@@ -338,6 +384,9 @@ const Portfolio = ({ trackId }) => {
           </div>
           <div className={styles.howBuiltGrid}>
             <article className={styles.role}>
+              <span className={styles.howBuiltIcon} aria-hidden="true">
+                <LayersIcon />
+              </span>
               <strong>Isolated UI</strong>
               <p>
                 The portfolio and the online résumé share one app, not one style
@@ -347,6 +396,9 @@ const Portfolio = ({ trackId }) => {
               </p>
             </article>
             <article className={styles.role}>
+              <span className={styles.howBuiltIcon} aria-hidden="true">
+                <PackageIcon />
+              </span>
               <strong>One static build</strong>
               <p>
                 Routing lives in the client so hosting can stay a static artifact.
@@ -355,35 +407,81 @@ const Portfolio = ({ trackId }) => {
               </p>
             </article>
             <article className={styles.role}>
+              <span className={styles.howBuiltIcon} aria-hidden="true">
+                <DatabaseIcon />
+              </span>
               <strong>Live data, two hosts</strong>
               <p>
                 The online résumé reads from Firebase Realtime Database, so content
                 can change without a code deploy. The same production build is
-                published to both public sites.
+                published to{' '}
+                <a
+                  href="https://ezekiellara.web.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ezekiellara.web.app
+                </a>
+                {' '}and{' '}
+                <a
+                  href="https://sergion-icv.web.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  sergion-icv.web.app
+                </a>
+                .
               </p>
             </article>
             <article className={styles.role}>
+              <span className={styles.howBuiltIcon} aria-hidden="true">
+                <MailIcon />
+              </span>
               <strong>Contact without a backend</strong>
               <p>
                 The contact form sends from the browser. There is no mail server,
                 inbox credential, or extra service to patch—lower operational load
                 for a brochure-and-contact surface.
               </p>
+              <button
+                type="button"
+                className={`${styles.primary} ${styles.howBuiltDemo}`}
+                onClick={() => setShowContact(true)}
+              >
+                Send email
+              </button>
             </article>
             <article className={styles.role}>
+              <span className={styles.howBuiltIcon} aria-hidden="true">
+                <GitBranchIcon />
+              </span>
               <strong>GitHub as system of record</strong>
               <p>
-                Source of truth is GitHub. Work is isolated on branches and reaches
-                main only through pull requests, so production changes are reviewed
-                and the history stays auditable.
+                GitHub is the system of record at{' '}
+                <a
+                  href="https://github.com/checonunez74/dynamicSNresume"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  github.com/checonunez74/dynamicSNresume
+                </a>
+                . Feature work is isolated on branches and
+                reaches main through pull requests, so the history stays reviewable. Merge
+                does not publish production; release is a separate, explicit step.
               </p>
             </article>
             <article className={styles.role}>
-              <strong>CI/CD with preview</strong>
+              <span className={styles.howBuiltIcon} aria-hidden="true">
+                <TerminalIcon />
+              </span>
+              <strong>Operator-driven release</strong>
               <p>
-                Every pull request is built in GitHub Actions and deployed to a
-                Firebase preview, so a running site can be reviewed before merge.
-                Production is that same build, published to both live hosts.
+                Production is not merge-triggered. I compile the Create React App locally
+                with npm run build, inspect the static artifact, then publish both Firebase
+                Hosting targets from the CLI in one deploy. That keeps environment,
+                timing, and blast radius under the keyboard instead of an unattended
+                pipeline. GitHub Actions still builds pull-request previews so a running
+                site can be reviewed before merge—CI for confidence, CD by choice.
               </p>
             </article>
           </div>
