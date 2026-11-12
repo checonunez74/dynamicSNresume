@@ -7,7 +7,7 @@ export const PROFILE = {
   email: 'ezeklara74@gmail.com',
   phone: '+1 (956) 800-2148',
   phoneHref: 'tel:+19568002148',
-  linkedinUrl: 'https://www.linkedin.com/in/sergio-h-nunez/',
+  linkedinUrl: 'https://www.linkedin.com/in/ezekiel-lara-79365242b/',
   linkedinLabel: 'LinkedIn',
 };
 
